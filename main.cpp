@@ -3,10 +3,12 @@
 #include "src/interface.hpp"
 #include <iostream>
 #include <unistd.h>
-#include "GPU.hpp"
-#include "PPU.hpp"
-#include "program.hpp"
-#include "interface.hpp"
+#include "src/GPU.hpp"
+#include "src/PPU.hpp"
+#include "src/program.hpp"
+#include "src/interface.hpp"
+
+using namespace std;
 
 IF_TYPE get_if(int argc, char *argv[]){
     int opt;
@@ -22,7 +24,8 @@ IF_TYPE get_if(int argc, char *argv[]){
                cerr << "Usage: solitaire [-i|-g]" << std::endl;
                exit(EXIT_FAILURE);
            }
-     }
+    }
+    return TEXT;
 }
 
 
