@@ -3,7 +3,7 @@
 #pragma once
 #include "deck.hpp"
 
-class Foundation:Deck{
+class Foundation: public Deck{
 	// you put cards from deck here
 	private:
 	public:

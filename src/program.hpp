@@ -4,16 +4,11 @@
 #include <vector>
 #include "PPU.hpp"
 
-enum IF_TYPE{
-	GUI, 
-	TEXT
-};
-
 class program{
 	private:
-		std::vector<PPU> game_interfaces;
+        interface &game_interfa;
 		
 	public:
-		void new_game(IF_TYPE type);
+        void new_game(interface &IF){game_interfa = IF};
 		//add_game
 };

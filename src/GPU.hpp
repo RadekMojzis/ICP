@@ -1,14 +1,12 @@
 
 
 #pragma once
-#include <iostream>
 #include "interface.hpp"
 
-
-class PPU: public interface{
+class GPU: public interface{
 	// you put cards from deck here
 	private:
+		CardIndex drawing_card;
 	public:
-    PPU();
-
+        GPU();
 };

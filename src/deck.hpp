@@ -6,9 +6,9 @@
 
 class Deck{
 	// you put cards from deck here
-	private:
+    protected:
 		std::vector<Card> cards;
 	public:
-		Deck(){};
-		const std::vector<Card> & get_cards();
+        Deck();
+        virtual const std::vector<Card> & get_cards() = 0;
 };
