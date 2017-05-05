@@ -3,8 +3,8 @@ all : solitere clear
 SRC=src/
 CC = g++ -std=c++11
 
-solitere: main.o program.o game.o card.o action.o stack_of_cards.o flip.o foundation.o deck.o pile.o PPU.o
-	$(CC) main.o program.o game.o card.o action.o stack_of_cards.o flip.o foundation.o deck.o pile.o PPU.o -o $@
+solitere: main.o program.o game.o card.o action.o stock.o flip.o foundation.o deck.o pile.o PPU.o
+	$(CC) main.o program.o game.o card.o action.o stock.o flip.o foundation.o deck.o pile.o PPU.o -o $@
 
 main.o: $(SRC)main.cpp
 	$(CC) $^ -c
@@ -24,7 +24,7 @@ card.o: $(SRC)card.cpp
 action.o: $(SRC)action.cpp
 	$(CC) $^ -c
 
-stack_of_cards.o: $(SRC)stack_of_cards.cpp
+stock.o: $(SRC)stock.cpp
 	$(CC) $^ -c
 	
 flip.o: $(SRC)flip.cpp

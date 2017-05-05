@@ -2,14 +2,18 @@
 #pragma once
 
 #include <vector>
+#include "PPU.hpp"
 
-#include "game.hpp"
-#include "action.hpp"
+enum IF_TYPE{
+	GUI, 
+	TEXT
+};
 
 class program{
 	private:
-		std::vector<Game> games;
+		std::vector<PPU> game_interfaces;
+		
 	public:
-		void create_game();
+		void new_game(IF_TYPE type);
 		//add_game
 };

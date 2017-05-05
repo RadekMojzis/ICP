@@ -1,10 +1,8 @@
 
-
 #pragma once
 #include "deck.hpp"
 
-class Pile:Deck{
-	// you put cards from deck here
+class Stock:Deck{
 	private:
 	public:
 		const std::vector<Card> & get_cards();

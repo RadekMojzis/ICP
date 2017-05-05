@@ -1,11 +1,11 @@
 
 
 #pragma once
-#include "stack_of_cards.hpp"
+#include "deck.hpp"
 
-class Foundation:Stack_of_cards{
+class Foundation:Deck{
 	// you put cards from deck here
 	private:
 	public:
-		void draw();
+		const std::vector<Card> & get_cards();
 };

@@ -1,9 +1,14 @@
 
-#pragma once
-#include "stack_of_cards.hpp"
 
-class Deck:Stack_of_cards{
+#pragma once
+#include "card.hpp"
+#include <vector>
+
+class Deck{
+	// you put cards from deck here
 	private:
+		std::vector<Card> cards;
 	public:
-		void draw();
+		Deck(){};
+		const std::vector<Card> & get_cards();
 };

@@ -1,9 +1,9 @@
 
 #pragma once
-#include "stack_of_cards.hpp"
+#include "deck.hpp"
 
-class Flip:Stack_of_cards{
+class Flip:Deck{
 	private:
 	public:
-		void draw();
+		const std::vector<Card> & get_cards();
 };

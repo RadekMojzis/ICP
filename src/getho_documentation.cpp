@@ -13,17 +13,19 @@ class PPU{
 		//prozatim stdout
 		std::fstream output;
 	public:
-		draw_card(Card &card, int x, int y); // card and position
+		draw_card(const Card &card); // card and position
+		draw_deck(int DeckID); // mozna neco jineho
 }
 
 // drawing stejnak musi delat nejaky stack of cards..
-typedef int Card // 0-51, cislo karty je number/13, barva je number%13
 class Card{
 	private:
 		int id;
 		bool face_up;
 	public:
 		flip();
+		get_id();
+		is_up();
 }
 
 class Action{
@@ -36,7 +38,7 @@ class Action{
 		reverse();
 }
 
-class Stack_of_cards{ 
+class Deck{ 
 	// a master class of all card stacks
 	private:
 	  std::vector<Card> cards;
@@ -44,25 +46,25 @@ class Stack_of_cards{
 	 draw();
 }
 
-class Deck(stack_of_cards){
+class Stock:Deck{
 	// The thing you draw cards from
 	private:
 	public:
 }
 
-class Flip(stack_of_cards){
+class Flip:Deck{
 	// you put cards from deck here
 	private:
 	public:
 }
 
-class Pile(stack_of_cards){
+class Pile:Deck{
 	// you play on these
 	private:
 	public:
 }
 
-class Foundation(stack_of_cards){
+class Foundation:Deck{
 	private:
 	public:
 	// here you want to put all cards

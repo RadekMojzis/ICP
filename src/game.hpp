@@ -1,28 +1,41 @@
+
 #pragma once
-#include "deck.hpp"
+
+#include "stock.hpp"
 #include "flip.hpp"
 #include "foundation.hpp"
 #include "pile.hpp"
 #include "action.hpp"
-#include "PPU.hpp"
 #include <vector>
+
+
+typedef int CardIndex;
+
+enum DeckID{
+	STOCK,
+	FLIP, 
+	PILE1, PILE2, PILE3, PILE4, PILE5, PILE6, PILE7,
+	FOUNDATION1, FOUNDATION2,FOUNDATION3, FOUNDATION4
+};
 
 class Game{
 	private:
-		Deck deck;
+		Stock stock;
 		Flip flip;
-		std::vector<Action> history;
 		
 		std::vector<Pile> piles;
 		std::vector<Foundation> foundations;
+
+		std::vector<Action> history;
 		
-		PPU printing_processing_unit;
-		
-		// nejspis bude mit action jako frienda...
 	public:
-		void draw();
-		void undo();
+		void execute_action(DeckID src, DeckID dst, CardIndex card);	
+		// interface has to be able to create actions but it doesnt have \
+			 access into Game object... 
+		
+		const std::vector<Card> & get_stock();
 		//?redo();
+		void undo();
 		void save();
 		void load();
 		void quit();
