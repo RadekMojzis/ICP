@@ -6,5 +6,5 @@ void Card::setPosition(CardPosition pos) {
 }
 
 CardPosition Card::getPosition() {
-sadadsa
+
 }
