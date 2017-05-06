@@ -1,7 +1,7 @@
 # anoying files...
 *.o
 /doc
-
+/build-Solitaire-Desktop_Qt_5_5_1_MinGW_32bit-Debug
 
 # executables
 *.exe
