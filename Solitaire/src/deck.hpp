@@ -9,7 +9,7 @@ enum DeckID{
     STOCK,
     FLIP,
     PILE1, PILE2, PILE3, PILE4, PILE5, PILE6, PILE7,
-    FOUNDATION1, FOUNDATION2,FOUNDATION3, FOUNDATION4
+    F_HEARTS, F_DIAMONDS,F_CLUBS, F_SPADES
 };
 
 class Foundation{
@@ -18,6 +18,7 @@ class Foundation{
     public:
         Foundation();
         ~Foundation();
+        Card* get_top();
         //const std::vector<Card> & get_cards(){};
 };
 
@@ -28,7 +29,7 @@ class Flip{
 //        push(Card& card);
 //        pop();
 //        Card& top();
-
+        Card* get_top();
         Flip();
         ~Flip();
         //const std::vector<Card> & get_cards();
@@ -39,9 +40,9 @@ class Pile{
         std::vector<Card> cards;
     public:
 
-        Pile() {};
+        Pile();
         ~Pile();
-        //const std::vector<Card> & get_cards();
+        std::vector<Card> & get_cards();
 };
 
 
@@ -49,7 +50,8 @@ class Stock{
     private:
         std::vector<Card> cards;
     public:
-        Stock() {};
+        Stock();
         ~Stock();
+        Card* get_top();
         //const std::vector<Card> & get_cards();
 };
