@@ -20,12 +20,9 @@ class Foundation{
     public:
         Foundation();
         ~Foundation();
-<<<<<<< HEAD
         Card* get_top();
-=======
         DeckID getID();
         bool ActionValidity();
->>>>>>> origin/master
         //const std::vector<Card> & get_cards(){};
 };
 
@@ -51,36 +48,28 @@ class Pile{
 
         Pile();
         ~Pile();
-<<<<<<< HEAD
         std::vector<Card> & get_cards();
-=======
         DeckID getID();
         bool ActionValidity();
     //const std::vector<Card> & get_cards();
->>>>>>> origin/master
 };
 
 
 class Stock{
-        DeckID id = 0;
+        DeckID id = STOCK;
         std::vector<Card> cards;
     public:
-<<<<<<< HEAD
         Stock();
         ~Stock();
         Card* get_top();
         //const std::vector<Card> & get_cards();
-=======
 
-        Stock() {};
-        Stock(vector<Card> & initCards, int ident): cards{initCards}, id{ident} {};
-        ~Stock();
+        Stock(std::vector<Card> & initCards, DeckID ident);
         DeckID getID();
-        bool ActionValidity(ActionID action, vector<Card> cards);
+        bool ActionValidity(ActionID action, std::vector<Card> cards);
         DeckSize getSize();
-        void addCards(vector<Card> & cards);
-        void removeCards(vector<Card> & cards);
+        void addCards(std::vector<Card> & cards);
+        void removeCards(std::vector<Card> & cards);
 
     //const std::vector<Card> & get_cards();
->>>>>>> origin/master
 };
