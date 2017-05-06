@@ -1,10 +1,20 @@
-#include"GPU.hpp"
+#include"interface.hpp"
 
-/*
-GPU::GPU(){
-   QApplication a();
-   MainWindow w;
-   w.show();
-   return a.exec();
+
+
+int GPU::run(){
+    w.show();
+    return qApp->exec();
 }
-*/
+
+void GPU::draw_game(){
+
+}
+
+void GPU::draw_deck(DeckID id){
+    (void) id;
+}
+
+void GPU::draw_card(Card *card){
+    (void) card;
+}

@@ -4,7 +4,9 @@
 #include <iostream>
 #include "card.hpp"
 #include "game.hpp"
+#include <QApplication>
 
+#include "mainwindow.h"
 
 class PPU{
     // you put cards from deck here
@@ -16,18 +18,19 @@ class PPU{
         void draw_card(Card *card);
         void init();
         PPU(){};
-        ~PPU();
+        ~PPU(){};
 };
 
 
 class GPU{
     // you put cards from deck here
     private:
+        MainWindow w;
     public:
-        void init(){};
-        void draw_game(){};
-        void draw_deck(){};
+        void draw_game();
+        void draw_deck(DeckID id);
         void draw_card(Card *card);
+        int run();
         GPU(){};
         ~GPU(){};
 };

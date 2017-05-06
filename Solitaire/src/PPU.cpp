@@ -6,11 +6,6 @@ void PPU::init(){
     cout << "PPU is being initialised..." << endl;
 };
 
-PPU::~PPU(){
-    cout << "PPU is being deinitialised..." << endl;
-};
-
-
 void PPU::draw_game(){
     cout << "Stock" << endl;
     draw_deck(STOCK);
