@@ -1,1 +1,6 @@
-#include"pile.hpp"
+#include"deck.hpp"
+
+std::vector<Card> & Pile::get_cards(){
+    std::vector<Card> & ref = cards;
+    return ref;
+}

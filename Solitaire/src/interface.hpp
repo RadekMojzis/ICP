@@ -4,16 +4,19 @@
 #include <iostream>
 #include "card.hpp"
 #include "game.hpp"
-#include <iostream>
+#include <QApplication>
+
+#include "mainwindow.h"
 
 class PPU{
     // you put cards from deck here
     private:
+        Game game;
     public:
-        void draw_game(){};
-        void draw_deck(){};
-        void draw_card(Card &card);
-        void init(){};
+        void draw_game();
+        void draw_deck(DeckID id);
+        void draw_card(Card *card);
+        void init();
         PPU(){};
         ~PPU(){};
 };
@@ -22,11 +25,12 @@ class PPU{
 class GPU{
     // you put cards from deck here
     private:
+        MainWindow w;
     public:
-        void init(){};
-        void draw_game(){};
-        void draw_deck(){};
-        void draw_card(Card &card);
+        void draw_game();
+        void draw_deck(DeckID id);
+        void draw_card(Card *card);
+        int run();
         GPU(){};
         ~GPU(){};
 };

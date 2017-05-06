@@ -1,4 +1,3 @@
-#include "mainwindow.h"
 #include <QApplication>
 #include <iostream>
 #include <unistd.h>
@@ -27,10 +26,13 @@ IF_TYPE get_if(int argc, char *argv[]){
 
 
 int main(int argc, char *argv[]){
+    QApplication a(argc, argv);
+
     IF_TYPE type;
     type = TEXT;
     if(argc != 1)
         type = get_if(argc, argv);
+
     program hra(type);
 
     return 0;

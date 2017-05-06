@@ -4,7 +4,7 @@
 program::program(IF_TYPE IF){
     interface = IF;
     if(interface == GUI){
-        gpu.init();
+        gpu.run();
     }
     if(interface == TEXT){
         ppu.init();
