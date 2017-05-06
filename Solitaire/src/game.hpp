@@ -4,6 +4,7 @@
 
 #include "action.hpp"
 #include <vector>
+#include <iterator>
 #include "deck.hpp"
 
 
@@ -23,7 +24,8 @@ class Game{
 		void execute_action(DeckID src, DeckID dst, CardIndex card);	
         // interface has to be able to create actions but it doesnt have
         //	 access into Game object...
-		
+        std::vector<Card> & get_deck(DeckID deck);
+        Card *get_top(DeckID deck);
 		const std::vector<Card> & get_stock();
 		//?redo();
 		void undo();

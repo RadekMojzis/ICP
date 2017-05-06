@@ -11,9 +11,9 @@ class PPU{
     private:
         Game game;
     public:
-        void draw_game(){};
-        void draw_deck(){};
-        void draw_card(Card &card);
+        void draw_game();
+        void draw_deck(DeckID id);
+        void draw_card(Card *card);
         void init();
         PPU(){};
         ~PPU();
@@ -27,7 +27,7 @@ class GPU{
         void init(){};
         void draw_game(){};
         void draw_deck(){};
-        void draw_card(Card &card);
+        void draw_card(Card *card);
         GPU(){};
         ~GPU(){};
 };
