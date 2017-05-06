@@ -13,12 +13,11 @@ enum DeckID{
 };
 
 class Foundation{
-    // you put cards from deck here
     private:
         std::vector<Card> cards;
     public:
-        ~Foundation();
         Foundation();
+        ~Foundation();
         //const std::vector<Card> & get_cards(){};
 };
 
@@ -30,18 +29,17 @@ class Flip{
 //        pop();
 //        Card& top();
 
-        ~Flip();
         Flip();
+        ~Flip();
         //const std::vector<Card> & get_cards();
 };
 
 class Pile{
-    // you put cards from deck here
     private:
         std::vector<Card> cards;
     public:
 
-        Pile();
+        Pile() {};
         ~Pile();
         //const std::vector<Card> & get_cards();
 };
@@ -51,7 +49,7 @@ class Stock{
     private:
         std::vector<Card> cards;
     public:
+        Stock() {};
         ~Stock();
-        Stock();
         //const std::vector<Card> & get_cards();
 };
