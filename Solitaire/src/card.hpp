@@ -1,5 +1,9 @@
 #pragma once
 
+
+typedef int CardIndex;
+
+
 class Card{
   private:
 		int id;

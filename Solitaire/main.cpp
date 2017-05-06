@@ -1,10 +1,7 @@
 #include "mainwindow.h"
 #include <QApplication>
-#include "src/interface.hpp"
 #include <iostream>
 #include <unistd.h>
-#include "src/GPU.hpp"
-#include "src/PPU.hpp"
 #include "src/program.hpp"
 #include "src/interface.hpp"
 
@@ -33,17 +30,8 @@ int main(int argc, char *argv[]){
     IF_TYPE type;
     type = TEXT;
     if(argc != 1)
-        type = get_if();
-    if(type == GUI){
-        GPU gpu();
-        GPU &gpu_ref = gpu;
-        program(gpu_ref);
-    }
-    else{
-        PPU ppu();
-        PPU &ppu_ref = ppu;
-        program(ppu_ref);
-    }
+        type = get_if(argc, argv);
+    program hra(type);
 
     return 0;
 }

@@ -34,21 +34,16 @@ SOURCES += main.cpp\
 				src\foundation.cpp\
 				src\game.cpp\
 				src\pile.cpp\
+				src\stock.cpp\
 				src\program.cpp
 				
 				
 HEADERS  += mainwindow.h\
 					src\interface.hpp\
-					src\PPU.hpp\
-					src\GPU.hpp\
 					src\action.hpp\
 					src\card.hpp\
 					src\deck.hpp\
-					src\flip.hpp\
-					src\foundation.hpp\
 					src\game.hpp\
-					src\pile.hpp\
-					src\program.hpp\
-					src\interface.hpp
+					src\program.hpp
 					
 FORMS    += mainwindow.ui

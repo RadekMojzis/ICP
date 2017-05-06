@@ -4,10 +4,11 @@
 
 class Action{
 	private:
-		Deck &from;
-		Deck &to;
-		Card &what;
+        DeckID from;
+        DeckID to;
+        CardIndex what;
 	public:
+        Action();
 		bool execute();
 		void reverse();
 };
