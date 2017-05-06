@@ -31,6 +31,7 @@ int main(int argc, char *argv[]){
     type = TEXT;
     if(argc != 1)
         type = get_if(argc, argv);
+
     program hra(type);
 
     return 0;
