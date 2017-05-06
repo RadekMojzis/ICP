@@ -62,8 +62,11 @@ class Stock{
         Stock(vector<Card> & initCards, int ident): cards{initCards}, id{ident} {};
         ~Stock();
         DeckID getID();
-        bool ActionValidity(ActionID action, vector<Card> cards);
         DeckSize getSize();
+
+        CardPosition
+
+        bool ActionValidity(ActionID action, vector<Card> cards);
         void addCards(vector<Card> & cards);
         void removeCards(vector<Card> & cards);
 

@@ -5,6 +5,7 @@ Card* Stock::get_top(){
     return &(*cards.end());
 }
 
+
 DeckSize Stock::DeckSize() {
     return cards.size();
 }

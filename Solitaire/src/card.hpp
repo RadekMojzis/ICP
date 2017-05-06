@@ -2,15 +2,23 @@
 
 
 typedef int CardIndex;
+typedef unsigned int CardPosition;
 
-
+/**
+ * \class Card represents a real card in the game.
+ * \var id is unique for every card. Represents the value and color of the card.
+ * \var faceUp flag which controls whether the card is flipped face-up or face-down.
+ */
 class Card{
-  private:
 		int id;
-		bool face_up;
+		bool faceUP;
+		CardPosition position;
 		
   public:
 		int get_id(){return id;};
 		bool is_up(){return face_up;};
 		void flip(){face_up = !face_up;}
+
+		void setPosition(CardPosition pos);
+		CardPosition getPosition();
 };
