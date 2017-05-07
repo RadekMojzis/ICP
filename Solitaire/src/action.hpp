@@ -11,4 +11,7 @@ class Action{
         Action();
 		bool execute();
 		void reverse();
+		DeckID getFrom();
+        DeckID getTo();
+        CardIndex getCard();
 };

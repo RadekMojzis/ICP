@@ -7,3 +7,20 @@ std::vector<Card> & Pile::get_cards(){
 Pile::Pile(){}
 
 Pile::~Pile(){}
+
+DeckID Pile::getID() {
+    return id;
+}
+
+DeckSize Pile::getSize() {
+    return cards.size();
+}
+
+void Pile::addCards(Card c) {
+    cards.push_back(c);
+}
+
+void Pile::removeCards() {
+    cards.pop_back();
+}
+

@@ -21,7 +21,8 @@ class Game{
 	public:
         Game();
         ~Game();
-		void execute_action(DeckID src, DeckID dst, CardIndex card);	
+        bool ActionValidity(Action act);
+		void execute_action(Action act);
         // interface has to be able to create actions but it doesnt have
         //	 access into Game object...
         std::vector<Card> & get_deck(DeckID deck);

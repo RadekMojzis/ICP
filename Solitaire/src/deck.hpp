@@ -12,7 +12,6 @@ enum DeckID{
     FOUNDATION1, FOUNDATION2,FOUNDATION3, FOUNDATION4
 };
 typedef unsigned int DeckSize;
-typedef unsigned int ActionID;
 
 class Foundation{
         DeckID id;
@@ -21,7 +20,10 @@ class Foundation{
         Foundation();
         ~Foundation();
         DeckID getID();
+        DeckSize getSize();
         bool ActionValidity();
+        void addCards(Card c);
+        void removeCards();
         //const std::vector<Card> & get_cards(){};
 };
 
@@ -36,8 +38,11 @@ class Flip{
         Flip();
         ~Flip();
         DeckID getID();
+        DeckSize getSize();
         bool ActionValidity();
-    //const std::vector<Card> & get_cards();
+        void addCards(Card c);
+        void removeCards();
+        //const std::vector<Card> & get_cards();
 };
 
 class Pile{
@@ -48,11 +53,16 @@ class Pile{
         Pile() {};
         ~Pile();
         DeckID getID();
+        DeckSize getSize();
         bool ActionValidity();
+        void addCards(Card c);
+        void removeCards();
     //const std::vector<Card> & get_cards();
 };
 
-
+/**
+ * \brief Deck from which cards are being drawn into the "flip" deck.
+ */
 class Stock{
         DeckID id = 0;
         std::vector<Card> cards;
@@ -64,11 +74,10 @@ class Stock{
         DeckID getID();
         DeckSize getSize();
 
-        CardPosition
-
+        vector<Card> getStack(CardPosition pos);
         bool ActionValidity(ActionID action, vector<Card> cards);
-        void addCards(vector<Card> & cards);
-        void removeCards(vector<Card> & cards);
+        void addCards(Card c);
+        void removeCards();
 
     //const std::vector<Card> & get_cards();
 };

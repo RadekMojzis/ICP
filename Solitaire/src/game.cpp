@@ -56,3 +56,33 @@ Card *Game::get_top(DeckID deck){
     // this can never happen but i hate warnings...
     return stock.get_top();
 }
+
+bool Game::ActionValidity(Action act){
+    DeckID src = act.getFrom();
+    DeckID dst = act.getTo();
+    CardIndex val = act.getCard();
+    switch (src) {
+        case STOCK:
+            if (dst != FLIP)    return false;
+        case FLIP:
+            if (dst == STOCK)   return false;
+            if (dst == FOUNDATION1 || dst == FOUNDATION2 || dst == FOUNDATION3 || dst == FOUNDATION4) {
+                //if (val % 13) return false;
+            }
+        case F_HEARTS:
+
+        case F_DIAMONDS:
+
+        case F_CLUBS:
+
+        case F_SPADES:
+
+        default:
+            break;
+    }
+}
+
+void Game::execute_action(Action act) {
+    if (ActionValidity(act))    act.execute();
+    return;
+}
