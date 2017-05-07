@@ -13,6 +13,18 @@ CardIndex Action::getCard() {
     return what;
 }
 
-bool Action::execute(){
+Action::Action(DeckID src, DeckID dst, CardIndex card){
+    from = src;
+    to = dst;
+    what = card;
+}
 
+void Action::flips(CardIndex card){
+    toFlip = card;
+}
+
+void Action::reverse(){
+    DeckID tmp = from;
+    from = to;
+    to = tmp;
 }

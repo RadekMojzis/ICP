@@ -20,6 +20,7 @@ void GPU::load_images(){
         cardname += ".png";
         cards.push_back(new QPixmap(path + cardname));
     }
+    cards.push_back(new QPixmap(path + "0.png"));
 }
 
 

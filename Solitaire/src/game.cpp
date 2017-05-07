@@ -115,11 +115,15 @@ bool Game::ActionValidity(Action act){
         }
         default: return false;
     }
+<<<<<<< HEAD
 
+=======
+    return true;
+>>>>>>> c16e2c9e1e1eb0580fdf201cb53f27fcffe3e810
 }
 
 void Game::execute_action(Action act) {
     if (ActionValidity(act))
-        act.execute();
+        //act.execute();
     return;
 }
