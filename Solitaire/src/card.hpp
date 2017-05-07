@@ -15,7 +15,7 @@ class Card{
 		CardPosition position;
 		
   public:
-		int get_id(){return id;};
+        int get_id(){return faceUP ? id : 52;};
         bool is_up(){return faceUP;};
         void flip(){faceUP = !faceUP;}
 

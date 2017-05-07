@@ -80,10 +80,11 @@ bool Game::ActionValidity(Action act){
         default:
             break;
     }
+    return true;
 }
 
 void Game::execute_action(Action act) {
     if (ActionValidity(act))
-        act.execute();
+        //act.execute();
     return;
 }
