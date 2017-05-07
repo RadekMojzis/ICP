@@ -67,63 +67,55 @@ bool Game::ActionValidity(Action act){
         }
         case FLIP : {
             if (src != STOCK) return false;
-            if ()
-        }
-
-    }
-    switch (src) {
-        case STOCK: {
-            if (dst != FLIP) return false;
             return true;
         }
-        case FLIP: {
-            if (dst == STOCK) return false;
-            if (dst == F_CLUBS) {
-                //the first card must be ace of clubs
-                if (foundations[0].getSize() == 0 && val != 0) return false;
-                //all the cards must be clubs
-                if (val > 12) return false;
-                //is not complete
-                if (foundations[0].get_top().get_id() == 12) return false;
-                //must be ascending
-                if (val - 1 != foundations[0].get_top().get_id()) return false;
-            }
-            if (dst == F_DIAMONDS) {
-                if (foundations[1].getSize() == 0 && val != 0) return false;
-                if (val > 25) return false;
-                if (foundations[1].get_top().get_id() == 25) return false;
-                if (val - 1 != foundations[1].get_top().get_id()) return false;
-            }
-            if (dst == F_HEARTS) {
-                if (foundations[2].getSize() == 0 && val != 0) return false;
-                if (val > 38) return false;
-                if (foundations[2].get_top().get_id() == 38) return false;
-                if (val - 1 != foundations[2].get_top().get_id()) return false;
-            }
-            if (dst == F_SPADES) {
-                if (foundations[3].getSize() == 0 && val != 0) return false;
-                if (val > 51) return false;
-                if (foundations[3].get_top().get_id() == 51) return false;
-                if (val - 1 != foundations[3].get_top().get_id()) return false;
-            }
+        case F_CLUBS : {
+            //the first card must be ace of clubs
+            if (foundations[0].getSize() == 0 && val != 0) return false;
+            //all the cards must be clubs
+            if (val > 12) return false;
+            //is not complete
+            if (foundations[0].get_top()->get_id() == 12) return false;
+            //must be ascending
+            if (val - 1 != foundations[0].get_top()->get_id()) return false;
+            return true;
+         }
+        case F_DIAMONDS : {
+            if (foundations[1].getSize() == 0 && val != 0) return false;
+            if (val > 25 && val < 13) return false;
+            if (foundations[1].get_top()->get_id() == 25) return false;
+            if (val - 1 != foundations[1].get_top()->get_id()) return false;
             return true;
         }
-        case PILE1 : {
-
+        case F_HEARTS : {
+            if (foundations[2].getSize() == 0 && val != 0) return false;
+            if (val > 38 && val < 26) return false;
+            if (foundations[2].get_top()->get_id() == 38) return false;
+            if (val - 1 != foundations[2].get_top()->get_id()) return false;
+            return true;
         }
-        case F_HEARTS: {
-
+        case F_SPADES : {
+            if (foundations[3].getSize() == 0 && val != 0) return false;
+            if (val > 51 && val < 39) return false;
+            if (foundations[3].get_top()->get_id() == 51) return false;
+            if (val - 1 != foundations[3].get_top()->get_id()) return false;
+            return true;
         }
-
-        case F_DIAMONDS:
-
-        case F_CLUBS:
-
-        case F_SPADES:
-
-        default:
-            break;
+        case PILE1 : {}
+        case PILE2 : {}
+        case PILE3 : {}
+        case PILE4 : {}
+        case PILE5 : {}
+        case PILE6 : {}
+        case PILE7 : {
+            //starts with king
+            //ends with ace
+            //racism
+            //descending
+        }
+        default: return false;
     }
+
 }
 
 void Game::execute_action(Action act) {
