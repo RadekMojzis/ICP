@@ -1,10 +1,10 @@
 
 #include <QWidget>
 #include <QLabel>
-
+#include <vector>
 typedef int CardID;
 
-
+extern std::vector <QPixmap*> cards;
 
 class gcard : public QLabel{
     Q_OBJECT
@@ -20,7 +20,7 @@ private:
 
     bool drag_action = false;
 public:
-    gcard(CardID card, int x, int y, QWidget * parent);
+    gcard(CardID card, int x, int y, std::vector<QPixmap*>& cards, QWidget * parent);
     ~gcard(){}
 
 signals:

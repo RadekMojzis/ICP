@@ -32,12 +32,14 @@ GPU::GPU(){
     window.show();
     cout << "Ahoj!" << endl;
     draw_game();
+    qApp->exec();
 }
 
 void GPU::draw_game(){
-    gcard *karta = new gcard(27, 10, 10, &window);
-    gcard *karta2 = new gcard(50, 140, 10, &window);
-    gcard *karta3 = new gcard(35, 10, 50, &window);
+    vector <QPixmap*> & images = cards;
+    gcard *karta = new gcard(27, 10, 10, images, &window);
+    gcard *karta2 = new gcard(50, 140, 10, images, &window);
+    gcard *karta3 = new gcard(35, 10, 50, images, &window);
 
 }
 

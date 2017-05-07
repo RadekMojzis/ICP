@@ -13,6 +13,8 @@
 #include <QtWidgets>
 #include <QLabel>
 
+using namespace std;
+
 class PPU{
     // you put cards from deck here
     private:
@@ -30,7 +32,8 @@ class GPU{
     // you put cards from deck here
     private:
         QWidget window;
-        std::vector <QPixmap*> cards;
+        vector <QPixmap*> cards;
+
         void load_images();
     public:
         void new_game();

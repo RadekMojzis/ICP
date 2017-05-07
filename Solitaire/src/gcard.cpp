@@ -1,11 +1,12 @@
 #include <iostream>
-#include <vector>
+
 #include <QMouseEvent>
 #include "gcard.h"
+#include <iostream>
+using namespace std;
 
-std::vector <QPixmap*> cards;
-
-gcard::gcard(CardID card, int x, int y, QWidget * parent):QLabel(parent){
+gcard::gcard(CardID card, int x, int y, vector <QPixmap*>& cards, QWidget * parent):QLabel(parent){
+    cout << "Ahoj!" << endl;
     connect( this, SIGNAL( clicked(QMouseEvent * )), this, SLOT( slotClicked(QMouseEvent * ) ) );
     connect( this, SIGNAL( released(QMouseEvent * ) ), this, SLOT( slotReleased(QMouseEvent * ) ) );
     connect( this, SIGNAL( doubleclick(QMouseEvent * ) ), this, SLOT( slotDoubleclick(QMouseEvent * ) ) );
@@ -13,8 +14,9 @@ gcard::gcard(CardID card, int x, int y, QWidget * parent):QLabel(parent){
 
     base_x = x;
     base_y = y;
-
+    cout << "Ahoj!" << endl;
     setPixmap(*cards[card]);
+    cout << "Ahoj!24" << endl;
     resize(122,174);
     move(x, y);
     setStyleSheet("border: 1px solid grey");
