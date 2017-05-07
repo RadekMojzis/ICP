@@ -36,7 +36,7 @@ void PPU::draw_game(){
     draw_deck(F_HEARTS);
     cout << "SPADES:";
     draw_deck(F_SPADES);
-
+    cout << "-------------------------------------------------------";
 }
 
 
@@ -58,7 +58,7 @@ void PPU::draw_card(Card *card){
         cout << "[XX]";
         return;
     }
-    vector<string> color = {"H", "D", "S", "C"};
+    vector<string> color = {"C", "D", "H", "S"};
     vector<string> number = {"A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"};
     cout <<"[" << color[card->get_id()/13] << number[card->get_id()%13] << "]";
 }

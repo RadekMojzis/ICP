@@ -1,7 +1,10 @@
+#pragma once
 
 #include <QWidget>
 #include <QLabel>
 #include <vector>
+#include "deck.hpp"
+
 typedef int CardID;
 
 extern std::vector <QPixmap*> cards;
@@ -9,6 +12,7 @@ extern std::vector <QPixmap*> cards;
 class gcard : public QLabel{
     Q_OBJECT
 private:
+    bool disabled;
     int number;
     int deck;
 
@@ -19,8 +23,12 @@ private:
     int base_drag_y;
 
     bool drag_action = false;
+    void releasestack();
+    void dragstack(int x, int y);
 public:
-    gcard(CardID card, int x, int y, std::vector<QPixmap*>& cards, QWidget * parent);
+    DeckID src;
+    gcard* next = nullptr;
+    gcard(CardID card, int x, int y, std::vector<QPixmap*>& cards,bool disabledrag, QWidget * parent);
     ~gcard(){}
 
 signals:

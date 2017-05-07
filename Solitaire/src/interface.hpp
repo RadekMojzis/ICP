@@ -33,14 +33,30 @@ class GPU{
     private:
         QWidget window;
         vector <QPixmap*> cards;
-
         void load_images();
+
+        vector<gcard*> hearts;
+        vector<gcard*> spades;
+        vector<gcard*> clubs;
+        vector<gcard*> diamonds;
+        vector<gcard*> pile0;
+        vector<gcard*> pile1;
+        vector<gcard*> pile2;
+        vector<gcard*> pile3;
+        vector<gcard*> pile4;
+        vector<gcard*> pile5;
+        vector<gcard*> pile6;
+        vector<gcard*> flip;
+        vector<gcard*> stock;
+
     public:
+        Game game;
         void new_game();
         void draw_game();
-        void draw_deck(DeckID id);
-        void draw_card(Card *card);
+        void draw_deck(DeckID deck);
+        void draw_card(Card *card, DeckID decks);
         int run();
+        void clear();
         GPU();
         ~GPU();
 };

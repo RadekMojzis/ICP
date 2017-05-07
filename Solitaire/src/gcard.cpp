@@ -5,21 +5,18 @@
 #include <iostream>
 using namespace std;
 
-gcard::gcard(CardID card, int x, int y, vector <QPixmap*>& cards, QWidget * parent):QLabel(parent){
-    cout << "Ahoj!" << endl;
+gcard::gcard(CardID card, int x, int y, vector <QPixmap*>& cards,bool disabledrag, QWidget * parent):QLabel(parent){
     connect( this, SIGNAL( clicked(QMouseEvent * )), this, SLOT( slotClicked(QMouseEvent * ) ) );
     connect( this, SIGNAL( released(QMouseEvent * ) ), this, SLOT( slotReleased(QMouseEvent * ) ) );
     connect( this, SIGNAL( doubleclick(QMouseEvent * ) ), this, SLOT( slotDoubleclick(QMouseEvent * ) ) );
     connect( this, SIGNAL( movement(QMouseEvent * ) ), this, SLOT( slotmovement(QMouseEvent * ) ) );
-
+    disabled = disabledrag;
     base_x = x;
     base_y = y;
-    cout << "Ahoj!" << endl;
     setPixmap(*cards[card]);
-    cout << "Ahoj!24" << endl;
-    resize(122,174);
+    resize(130,180);
     move(x, y);
-    setStyleSheet("border: 1px solid grey");
+    //setStyleSheet("border: 1px solid grey");
     number = card;
     setAcceptDrops(true);
     show();
@@ -43,33 +40,48 @@ void gcard::mouseMoveEvent ( QMouseEvent * event ){
 }
 
 void gcard::slotClicked(QMouseEvent * event){
+    if(disabled)
+        return;
     base_drag_x = event->globalX();
     base_drag_y = event->globalY();
-
-    std::cout << "He clicked on me [" << number <<"]!" <<  std::endl;
 }
 
 void gcard::slotReleased(QMouseEvent * event){
     move(base_x, base_y);
+    if(next != nullptr)
+         releasestack();
     if(drag_action){
         (void) event;
         //generate drop
     }
 
-    std::cout << "released! [" << number <<"]!" <<  std::endl;
     drag_action = false;
 }
 
 void gcard::slotDoubleclick(QMouseEvent * event){
-    std::cout << "doubleclick [" << number <<"]!" <<  std::endl;
 }
 
 void gcard::slotmovement(QMouseEvent * event){
+    if(disabled)
+        return;
     int x = base_x + event->globalX() - base_drag_x;
     int y = base_y + event->globalY() - base_drag_y;
     drag_action = true;
     move(x, y);
-
-    std::cout << "movement over [" << number <<"]!" <<  std::endl;
+    raise();
+    if(next != nullptr)
+        next->dragstack(event->globalX() - base_drag_x, event->globalY() - base_drag_y);
 }
 
+void gcard::dragstack(int x, int y){
+    move(base_x + x, base_y + y);
+    raise();
+    if(next != nullptr)
+        next->dragstack(x, y);
+}
+
+void gcard::releasestack(){
+    move(base_x, base_y);
+    if(next != nullptr)
+        next->releasestack();
+}
