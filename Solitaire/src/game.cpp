@@ -61,15 +61,59 @@ bool Game::ActionValidity(Action act){
     DeckID src = act.getFrom();
     DeckID dst = act.getTo();
     CardIndex val = act.getCard();
+    switch (dst) {
+        case STOCK : {
+            return false;
+        }
+        case FLIP : {
+            if (src != STOCK) return false;
+            if ()
+        }
+
+    }
     switch (src) {
-        case STOCK:
-            if (dst != FLIP)    return false;
-        case FLIP:
-            if (dst == STOCK)   return false;
-            if (dst == F_HEARTS || dst == F_DIAMONDS || dst == F_CLUBS || dst == F_SPADES) {
-                //if (val % 13) return false;
+        case STOCK: {
+            if (dst != FLIP) return false;
+            return true;
+        }
+        case FLIP: {
+            if (dst == STOCK) return false;
+            if (dst == F_CLUBS) {
+                //the first card must be ace of clubs
+                if (foundations[0].getSize() == 0 && val != 0) return false;
+                //all the cards must be clubs
+                if (val > 12) return false;
+                //is not complete
+                if (foundations[0].get_top().get_id() == 12) return false;
+                //must be ascending
+                if (val - 1 != foundations[0].get_top().get_id()) return false;
             }
-        case F_HEARTS:
+            if (dst == F_DIAMONDS) {
+                if (foundations[1].getSize() == 0 && val != 0) return false;
+                if (val > 25) return false;
+                if (foundations[1].get_top().get_id() == 25) return false;
+                if (val - 1 != foundations[1].get_top().get_id()) return false;
+            }
+            if (dst == F_HEARTS) {
+                if (foundations[2].getSize() == 0 && val != 0) return false;
+                if (val > 38) return false;
+                if (foundations[2].get_top().get_id() == 38) return false;
+                if (val - 1 != foundations[2].get_top().get_id()) return false;
+            }
+            if (dst == F_SPADES) {
+                if (foundations[3].getSize() == 0 && val != 0) return false;
+                if (val > 51) return false;
+                if (foundations[3].get_top().get_id() == 51) return false;
+                if (val - 1 != foundations[3].get_top().get_id()) return false;
+            }
+            return true;
+        }
+        case PILE1 : {
+
+        }
+        case F_HEARTS: {
+
+        }
 
         case F_DIAMONDS:
 
