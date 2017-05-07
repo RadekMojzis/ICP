@@ -1,8 +1,10 @@
 #include"interface.hpp"
-
+#include <QDir>
 
 void GPU::load_images(){
-    QString path = "D:/testground/QT/cards/";
+    QString dir = "D:/FIT/ICP/Solitaire/";
+
+    QString path = dir + "img/";
     QString cardname;
     for(int i = 0; i < 52; i++){
         if(i < 52)
@@ -16,7 +18,6 @@ void GPU::load_images(){
 
         cardname += QString::number(i%13);
         cardname += ".png";
-
         cards.push_back(new QPixmap(path + cardname));
     }
 }
@@ -30,7 +31,6 @@ GPU::GPU(){
     load_images();
 
     window.show();
-    cout << "Ahoj!" << endl;
     draw_game();
     qApp->exec();
 }
@@ -40,6 +40,7 @@ void GPU::draw_game(){
     vector <QPixmap*> & images = cards;
     gcard *karta = new gcard(27, 10, 10, images, false, &window);
     gcard *karta2 = new gcard(50, 140, 10, images,false, &window);
+    (void) karta2;
     gcard *karta3 = new gcard(35, 10, 50, images,false, &window);
     karta->next = karta3;
 
