@@ -66,7 +66,7 @@ bool Game::ActionValidity(Action act){
             if (dst != FLIP)    return false;
         case FLIP:
             if (dst == STOCK)   return false;
-            if (dst == FOUNDATION1 || dst == FOUNDATION2 || dst == FOUNDATION3 || dst == FOUNDATION4) {
+            if (dst == F_HEARTS || dst == F_DIAMONDS || dst == F_CLUBS || dst == F_SPADES) {
                 //if (val % 13) return false;
             }
         case F_HEARTS:
@@ -83,6 +83,7 @@ bool Game::ActionValidity(Action act){
 }
 
 void Game::execute_action(Action act) {
-    if (ActionValidity(act))    act.execute();
+    if (ActionValidity(act))
+        act.execute();
     return;
 }

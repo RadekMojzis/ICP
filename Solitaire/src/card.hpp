@@ -16,8 +16,8 @@ class Card{
 		
   public:
 		int get_id(){return id;};
-		bool is_up(){return face_up;};
-		void flip(){face_up = !face_up;}
+        bool is_up(){return faceUP;};
+        void flip(){faceUP = !faceUP;}
 
 		void setPosition(CardPosition pos);
 		CardPosition getPosition();

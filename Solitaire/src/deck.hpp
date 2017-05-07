@@ -4,12 +4,13 @@
 #include "card.hpp"
 #include <vector>
 
+using namespace std;
 
 enum DeckID{
     STOCK,
     FLIP,
     PILE1, PILE2, PILE3, PILE4, PILE5, PILE6, PILE7,
-    FOUNDATION1, FOUNDATION2,FOUNDATION3, FOUNDATION4
+    F_CLUBS, F_DIAMONDS,F_HEARTS, F_SPADES
 };
 typedef unsigned int DeckSize;
 
@@ -24,7 +25,7 @@ class Foundation{
         bool ActionValidity();
         void addCards(Card c);
         void removeCards();
-        //const std::vector<Card> & get_cards(){};
+        Card* get_top();
 };
 
 class Flip{
@@ -42,42 +43,46 @@ class Flip{
         bool ActionValidity();
         void addCards(Card c);
         void removeCards();
-        //const std::vector<Card> & get_cards();
+        Card* get_top();
 };
 
 class Pile{
         DeckID id;
-        std::vector<Card> cards;
+        vector<Card> cards;
     public:
 
-        Pile() {};
+        Pile();
         ~Pile();
         DeckID getID();
         DeckSize getSize();
         bool ActionValidity();
         void addCards(Card c);
         void removeCards();
-    //const std::vector<Card> & get_cards();
+        vector<Card> & get_cards();
 };
 
 /**
  * \brief Deck from which cards are being drawn into the "flip" deck.
  */
+typedef int ActionID;
+
 class Stock{
-        DeckID id = 0;
-        std::vector<Card> cards;
+        DeckID id = STOCK;
+        vector<Card> cards;
     public:
 
-        Stock() {};
-        Stock(vector<Card> & initCards, int ident): cards{initCards}, id{ident} {};
+        Stock();
+        Stock(vector<Card> & initCards, DeckID ident): cards{initCards}, id{ident} {};
         ~Stock();
         DeckID getID();
         DeckSize getSize();
 
         vector<Card> getStack(CardPosition pos);
-        bool ActionValidity(ActionID action, vector<Card> cards);
+        bool ActionValidity(ActionID action);
+        //bool ActionValidity(ActionID action, vector<Card> cards);
+
         void addCards(Card c);
         void removeCards();
-
+        Card* get_top();
     //const std::vector<Card> & get_cards();
 };

@@ -1,36 +1,43 @@
 
 
 #pragma once
+
 #include <iostream>
+#include <vector>
+
 #include "card.hpp"
 #include "game.hpp"
-#include <QApplication>
+#include "gcard.h"
 
-#include "mainwindow.h"
+#include <QApplication>
+#include <QtWidgets>
+#include <QLabel>
 
 class PPU{
     // you put cards from deck here
     private:
         Game game;
     public:
+        void new_game();
         void draw_game();
         void draw_deck(DeckID id);
         void draw_card(Card *card);
-        void init();
-        PPU(){};
-        ~PPU(){};
+        PPU();
+        ~PPU();
 };
-
 
 class GPU{
     // you put cards from deck here
     private:
-        MainWindow w;
+        QWidget window;
+        std::vector <QPixmap*> cards;
+        void load_images();
     public:
+        void new_game();
         void draw_game();
         void draw_deck(DeckID id);
         void draw_card(Card *card);
         int run();
-        GPU(){};
-        ~GPU(){};
+        GPU();
+        ~GPU();
 };

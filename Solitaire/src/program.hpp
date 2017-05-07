@@ -12,9 +12,9 @@ enum IF_TYPE{
 
 class program{
 	private:
-        GPU gpu;
-        PPU ppu;
-        IF_TYPE interface;
+        GPU *gpu;
+        PPU *ppu;
+        IF_TYPE cosi;
 	public:
         void new_game();
         program(IF_TYPE IF);

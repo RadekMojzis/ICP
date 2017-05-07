@@ -1,12 +1,14 @@
 #include"deck.hpp"
 
+Stock::Stock(){}
+Stock::~Stock(){}
 
 Card* Stock::get_top(){
     return &(*cards.end());
 }
 
 
-DeckSize Stock::DeckSize() {
+DeckSize Stock::getSize() {
     return cards.size();
 }
 
@@ -14,9 +16,9 @@ DeckID Stock::getID() {
     return id;
 }
 
-vector<Card> Stock::getStack(CardPosition pos, DeckSize size){
+vector<Card> Stock::getStack(CardPosition pos){
     std::vector<Card> ret;
-    for (int i = pos; pos < size; pos++) {
+    for (int i = pos; pos < getSize(); pos++) {
         ret.push_back (cards[pos]);
     }
     return ret;
@@ -28,7 +30,7 @@ vector<Card> Stock::getStack(CardPosition pos, DeckSize size){
  */
 bool Stock::ActionValidity(ActionID action) {
     switch(action) {
-        case POP : {
+        /*case POP : {
             return true;
         }
         case GET : {
@@ -36,7 +38,9 @@ bool Stock::ActionValidity(ActionID action) {
         }
         case PUT : {
             return false;
-        }
+        }*/
+        default:
+            break;
     }
 }
 

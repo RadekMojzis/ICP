@@ -1,8 +1,8 @@
-#include <QApplication>
 #include <iostream>
 #include <unistd.h>
 #include "src/program.hpp"
 #include "src/interface.hpp"
+#include <QApplication>
 
 using namespace std;
 

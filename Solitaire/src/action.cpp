@@ -12,3 +12,7 @@ DeckID Action::getTo() {
 CardIndex Action::getCard() {
     return what;
 }
+
+bool Action::execute(){
+
+}

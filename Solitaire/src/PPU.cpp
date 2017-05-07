@@ -2,7 +2,9 @@
 #include<iostream>
 using namespace std;
 
-void PPU::init(){
+
+
+PPU::PPU(){
     cout << "PPU is being initialised..." << endl;
 };
 
@@ -26,14 +28,15 @@ void PPU::draw_game(){
     draw_deck(PILE6);
     cout << "7 |";
     draw_deck(PILE7);
-    cout << "HEARTS:";
-    draw_deck(F_HEARTS);
-    cout << "DIAMONDS:";
-    draw_deck(F_DIAMONDS);
     cout << "CLUBS:";
     draw_deck(F_CLUBS);
+    cout << "DIAMONDS:";
+    draw_deck(F_DIAMONDS);
+    cout << "HEARTS:";
+    draw_deck(F_HEARTS);
     cout << "SPADES:";
     draw_deck(F_SPADES);
+
 }
 
 
@@ -58,4 +61,8 @@ void PPU::draw_card(Card *card){
     vector<string> color = {"H", "D", "S", "C"};
     vector<string> number = {"A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"};
     cout <<"[" << color[card->get_id()/13] << number[card->get_id()%13] << "]";
+}
+
+void PPU::new_game(){
+
 }
