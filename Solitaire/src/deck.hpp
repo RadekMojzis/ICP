@@ -6,19 +6,29 @@
 
 using namespace std;
 
-enum DeckID{
-    STOCK,
-    FLIP,
-    PILE1, PILE2, PILE3, PILE4, PILE5, PILE6, PILE7,
-    F_CLUBS, F_DIAMONDS,F_HEARTS, F_SPADES
-};
+typedef int DeckID;
+
+const int STOCK = 0;
+const int FLIP = 1;
+const int PILE1 = 2;
+const int PILE2 = 3;
+const int PILE3 = 4;
+const int PILE4 = 5;
+const int PILE5 = 6;
+const int PILE6 = 7;
+const int PILE7 = 8;
+const int F_CLUBS = 9;
+const int F_DIAMONDS = 10;
+const int F_HEARTS = 11;
+const int F_SPADES = 12;
+
 typedef unsigned int DeckSize;
 
 class Foundation{
         DeckID id;
         std::vector<Card> cards;
     public:
-        Foundation();
+        Foundation(DeckID ident){id = ident;};
         ~Foundation();
         DeckID getID();
         DeckSize getSize();
@@ -36,7 +46,7 @@ class Flip{
 //        pop();
 //        Card& top();
 
-        Flip();
+        Flip(){id = FLIP;};
         ~Flip();
         DeckID getID();
         DeckSize getSize();
@@ -50,9 +60,9 @@ class Pile{
         DeckID id;
         vector<Card> cards;
     public:
-
-        Pile();
+        Pile(DeckID ident){id = ident;};
         ~Pile();
+        void push_back(int card);
         DeckID getID();
         DeckSize getSize();
         bool ActionValidity();
@@ -70,8 +80,7 @@ class Stock{
         DeckID id = STOCK;
         vector<Card> cards;
     public:
-
-        Stock();
+        Stock(){};
         Stock(vector<Card> & initCards, DeckID ident): cards{initCards}, id{ident} {};
         ~Stock();
         DeckID getID();

@@ -1,6 +1,5 @@
 #include"deck.hpp"
 
-Stock::Stock(){}
 Stock::~Stock(){}
 
 Card* Stock::get_top(){
@@ -55,3 +54,5 @@ void Stock::removeCards() {
         //will be driven by game????
     }
 }
+
+

@@ -4,7 +4,6 @@ std::vector<Card> & Pile::get_cards(){
     std::vector<Card> & ref = cards;
     return ref;
 }
-Pile::Pile(){}
 
 Pile::~Pile(){}
 
@@ -24,3 +23,6 @@ void Pile::removeCards() {
     cards.pop_back();
 }
 
+void Pile::push_back(int card){
+    cards.push_back(Card(card));
+}

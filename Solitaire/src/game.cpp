@@ -1,11 +1,35 @@
 #include "game.hpp"
 #include<iostream>
-
+#include <algorithm>
 using namespace std;
 
 Game::Game(){
     cout << "game is being initialised" << endl;
-    //init stuff
+    for(int i = 2; i < 9; i++){
+        piles.push_back(Pile(i));
+    }
+
+    vector <int> shuffle;
+    for(int i = 0; i < 52; i++){
+        shuffle.push_back(i);
+    }
+    random_shuffle(shuffle.begin(),shuffle.end());
+    for(int i = 0; i < 7; i++){
+        for(int j = 0; j <= i; j++){
+            piles[i].push_back(shuffle.back());
+            shuffle.pop_back();
+        }
+    }
+    vector<Card> dek;
+    for(auto c = shuffle.begin(); c < shuffle.end(); c++){
+        dek.push_back(Card(*c));
+    }
+
+    vector<Card> &crd = dek;
+    stock = Stock(crd, STOCK);
+    for(int i = 9; i < 13; i++)
+        foundations.push_back(Foundation(i));
+
 }
 
 Game::~Game(){
@@ -115,11 +139,8 @@ bool Game::ActionValidity(Action act){
         }
         default: return false;
     }
-<<<<<<< HEAD
 
-=======
     return true;
->>>>>>> c16e2c9e1e1eb0580fdf201cb53f27fcffe3e810
 }
 
 void Game::execute_action(Action act) {
