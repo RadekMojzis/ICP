@@ -3,7 +3,13 @@
 #include <algorithm>
 using namespace std;
 
-int chaos (int i) { return std::rand()%i;}
+int chaos (int i) {
+    static int a = 0;
+    a += 17;
+    return (std::rand()+a)%i;
+}
+
+
 
 Game::Game(){
     cout << "game is being initialised" << endl;

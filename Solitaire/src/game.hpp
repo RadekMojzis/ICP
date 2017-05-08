@@ -28,9 +28,9 @@ class Game{
 		const std::vector<Card> & get_stock();
 
 
-		void undo();
-		void save();
-		void load();
-		void quit();
+        void undo(){};
+        void save(string file){};
+        void load(string file){};
+        void quit(){};
 };
 

@@ -3,7 +3,7 @@
 
 #include <vector>
 #include "interface.hpp"
-
+#include "gcard.h"
 enum IF_TYPE{
     GUI,
     TEXT
