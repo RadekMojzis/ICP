@@ -27,6 +27,7 @@ typedef unsigned int DeckSize;
 class Foundation{
         DeckID id;
         std::vector<Card> cards;
+        Card blank;
     public:
         Foundation(DeckID ident){id = ident;};
         ~Foundation();
@@ -39,6 +40,7 @@ class Foundation{
 };
 
 class Flip{
+        Card blank;
         DeckID id;
         std::vector<Card> cards;
     public:
@@ -57,6 +59,7 @@ class Flip{
 };
 
 class Pile{
+        Card blank;
         DeckID id;
         vector<Card> cards;
     public:
@@ -77,6 +80,7 @@ class Pile{
 typedef int ActionID;
 
 class Stock{
+        Card blank;
         DeckID id = STOCK;
         vector<Card> cards;
     public:

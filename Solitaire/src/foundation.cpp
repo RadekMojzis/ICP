@@ -1,6 +1,8 @@
 #include"deck.hpp"
 
 Card* Foundation::get_top(){
+    if(cards.empty())
+        return & blank;
     return &(*cards.end());
 }
 

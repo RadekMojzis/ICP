@@ -3,6 +3,8 @@
 Stock::~Stock(){}
 
 Card* Stock::get_top(){
+    if(cards.empty())
+        return & blank;
     return &(*cards.end());
 }
 

@@ -1,6 +1,9 @@
 #include"deck.hpp"
 
 Card* Flip::get_top(){
+    if(cards.empty()){
+        return &blank;
+    }
     return &(*cards.end());
 }
 
