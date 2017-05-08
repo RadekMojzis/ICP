@@ -16,7 +16,7 @@ class Card{
 		CardPosition position;
 		
   public:
-        Card(){id = 52;}
+        Card(){id = 53;}
         Card(int ident){id = ident; faceUP = true;};
         int get_id(){return faceUP ? id : 52;};
         bool is_up(){return faceUP;};

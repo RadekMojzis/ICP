@@ -41,6 +41,7 @@ void gcard::mouseMoveEvent ( QMouseEvent * event ){
 }
 
 void gcard::slotClicked(QMouseEvent * event){
+    cout << number << endl;
     if(disabled)
         return;
     base_drag_x = event->globalX();

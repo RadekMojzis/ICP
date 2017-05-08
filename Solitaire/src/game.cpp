@@ -3,6 +3,8 @@
 #include <algorithm>
 using namespace std;
 
+int chaos (int i) { return std::rand()%i;}
+
 Game::Game(){
     cout << "game is being initialised" << endl;
     for(int i = 2; i < 9; i++){
@@ -13,7 +15,8 @@ Game::Game(){
     for(int i = 0; i < 52; i++){
         shuffle.push_back(i);
     }
-    random_shuffle(shuffle.begin(),shuffle.end());
+    std::srand ( unsigned ( std::time(0) ) );
+    random_shuffle(shuffle.begin(),shuffle.end(), chaos);
     for(int i = 0; i < 7; i++){
         for(int j = 0; j <= i; j++){
             piles[i].push_back(shuffle.back());

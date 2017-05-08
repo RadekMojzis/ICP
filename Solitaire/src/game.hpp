@@ -6,7 +6,7 @@
 #include <vector>
 #include <iterator>
 #include "deck.hpp"
-
+#include <ctime>
 
 class Game{
 	private:
@@ -27,8 +27,10 @@ class Game{
         Card *get_top(DeckID deck);
 		const std::vector<Card> & get_stock();
 
+
 		void undo();
 		void save();
 		void load();
 		void quit();
 };
+

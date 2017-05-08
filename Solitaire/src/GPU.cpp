@@ -16,16 +16,21 @@ void GPU::load_images(){
         if(i < 13)
             cardname = "C";
 
-        cardname += QString::number(i%13);
+        cardname += QString::number((i%13)+1);
         cardname += ".png";
         cards.push_back(new QPixmap(path + cardname));
     }
     cards.push_back(new QPixmap(path + "0.png"));
+    cards.push_back(new QPixmap(path + "CF.png"));
+    cards.push_back(new QPixmap(path + "DF.png"));
+    cards.push_back(new QPixmap(path + "HF.png"));
+    cards.push_back(new QPixmap(path + "SF.png"));
+    cards.push_back(new QPixmap(path + "B.png"));
 }
 
 
 GPU::GPU(){
-    window.resize(1200, 675);
+    window.resize(1200, 800);
     window.show();
     window.setWindowTitle("Solitere");
 
@@ -59,7 +64,7 @@ void GPU::draw_deck(DeckID deck){
 
 void GPU::draw_card(Card *card, DeckID deck){
     gcard* ncard;
-    cout << "trying to put: [" << card->get_id() <<"] into deck: " <<  deck << endl;
+    //cout << "trying to put: [" << card->get_id() <<"] into deck: " <<  deck << endl;
     if(deck <= F_SPADES && deck >= F_CLUBS){
         int F_index = deck - F_CLUBS;
         ncard = new gcard(card->get_id(), FOUNDATION_X, 10 + F_index * 190, cards, true, &window);
@@ -79,7 +84,7 @@ void GPU::draw_card(Card *card, DeckID deck){
         ncard->src = STOCK;
     }
     if(deck == FLIP){
-        ncard = new gcard(card->get_id(), 10, 390, cards, false, &window);
+        ncard = new gcard(card->get_id(), 10, 190 , cards, false, &window);
         ncard->src = FLIP;
     }
 }

@@ -29,7 +29,7 @@ class Foundation{
         std::vector<Card> cards;
         Card blank;
     public:
-        Foundation(DeckID ident){id = ident;};
+        Foundation(DeckID ident);
         ~Foundation();
         DeckID getID();
         DeckSize getSize();
@@ -48,7 +48,7 @@ class Flip{
 //        pop();
 //        Card& top();
 
-        Flip(){id = FLIP;};
+        Flip(){id = FLIP; blank = Card(57);};
         ~Flip();
         DeckID getID();
         DeckSize getSize();
@@ -65,7 +65,7 @@ class Pile{
         DeckID id;
         vector<Card> cards;
     public:
-        Pile(DeckID ident){id = ident;};
+        Pile(DeckID ident){id = ident; blank = Card(57);};
         ~Pile();
         void push_back(int card);
         DeckID getID();
@@ -87,7 +87,7 @@ class Stock{
         DeckID id = STOCK;
         vector<Card> cards;
     public:
-        Stock(){};
+        Stock(){blank = Card(57);};
         Stock(vector<Card> & initCards, DeckID ident): cards{initCards}, id{ident} {};
         ~Stock();
         DeckID getID();
