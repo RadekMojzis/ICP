@@ -8,11 +8,7 @@ std::vector<Card> & Pile::get_cards(){
     std::vector<Card> & ref = cards;
     return ref;
 }
-<<<<<<< HEAD
 
-Pile::Pile(){}
-=======
->>>>>>> origin/master
 
 Pile::~Pile(){}
 
@@ -32,10 +28,6 @@ void Pile::removeCards() {
     cards.pop_back();
 }
 
-<<<<<<< HEAD
-
-=======
 void Pile::push_back(int card){
     cards.push_back(Card(card));
 }
->>>>>>> origin/master
