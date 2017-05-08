@@ -1,9 +1,10 @@
 #include"deck.hpp"
 
-Stock::Stock(){}
 Stock::~Stock(){}
 
 Card* Stock::get_top(){
+    if(cards.empty())
+        return & blank;
     return &(*cards.end());
 }
 
@@ -55,3 +56,5 @@ void Stock::removeCards() {
         //will be driven by game????
     }
 }
+
+

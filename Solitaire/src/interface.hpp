@@ -28,6 +28,8 @@ class PPU{
         ~PPU();
 };
 
+const int FOUNDATION_X = 1050;
+
 class GPU{
     // you put cards from deck here
     private:
@@ -35,17 +37,8 @@ class GPU{
         vector <QPixmap*> cards;
         void load_images();
 
-        vector<gcard*> hearts;
-        vector<gcard*> spades;
-        vector<gcard*> clubs;
-        vector<gcard*> diamonds;
-        vector<gcard*> pile0;
-        vector<gcard*> pile1;
-        vector<gcard*> pile2;
-        vector<gcard*> pile3;
-        vector<gcard*> pile4;
-        vector<gcard*> pile5;
-        vector<gcard*> pile6;
+        vector<vector<gcard*>> foundations;
+        vector<vector<gcard*>> piles;
         vector<gcard*> flip;
         vector<gcard*> stock;
 
