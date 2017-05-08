@@ -2,6 +2,7 @@
 *.o
 /doc
 /build-Solitaire-Desktop_Qt_5_5_1_MinGW_32bit-Debug
+/build-Solitaire-Desktop_Qt_5_5_1_MinGW_32bit-Ladění
 
 # executables
 *.exe
@@ -61,3 +62,5 @@ Network Trash Folder
 Temporary Items
 .apdisk
 solitere
+build-Solitaire-Desktop_Qt_5_5_1_MinGW_32bit-Ladění/object_script.Solitaire.Release
+build-Solitaire-Desktop_Qt_5_5_1_MinGW_32bit-Ladění/debug/moc_gcard.cpp
