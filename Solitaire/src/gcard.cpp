@@ -6,6 +6,7 @@
 using namespace std;
 
 gcard::gcard(CardID card, int x, int y, vector <QPixmap*>& cards,bool disabledrag, QWidget * parent):QLabel(parent){
+    cout << "creating card [" << card << "]- on[" << x << ", " << y << "]" <<endl;
     connect( this, SIGNAL( clicked(QMouseEvent * )), this, SLOT( slotClicked(QMouseEvent * ) ) );
     connect( this, SIGNAL( released(QMouseEvent * ) ), this, SLOT( slotReleased(QMouseEvent * ) ) );
     connect( this, SIGNAL( doubleclick(QMouseEvent * ) ), this, SLOT( slotDoubleclick(QMouseEvent * ) ) );

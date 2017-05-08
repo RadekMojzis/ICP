@@ -66,7 +66,7 @@ void GPU::draw_card(Card *card, DeckID deck){
         foundations[F_index].push_back(ncard);
         ncard->src = deck;
     }
-    if(deck <= PILE1 && deck >= PILE7){
+    if(deck >= PILE1 && deck <= PILE7){
         int P_index = deck - PILE1;
         ncard = new gcard(card->get_id(), 140 + 130 * P_index , 10 + piles[P_index].size() * 30 , cards, false, &window);
         if(piles[P_index].size())
