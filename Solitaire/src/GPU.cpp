@@ -1,7 +1,7 @@
 #include"gcard.h"
 #include <QDir>
 #include <QApplication>
-
+#include <iostream>
 void GPU::load_images(){
     QString dir = "D:/FIT/ICP/Solitaire/";
 
@@ -153,13 +153,25 @@ void GPU::clear(){
     delete stock[active];
 
 }
-
+int abs(int a){
+    return a > 0 ? a:-a;
+}
 int GPU::get_dst_deck(int base_x,int base_y, int g_index){
     for(auto i = foundations[g_index].begin(); i < foundations[g_index].end(); i++){
+        cout << "relative position is: " << abs((*((*i).end()-1))->base_y - base_y) << " deck is: " << (*((*i).end()-1))->src << endl;
+        cout << "relative position is: " << abs((*((*i).end()-1))->base_x - base_x) << " deck is: " << (*((*i).end()-1))->src << endl;
 
+        if(abs((*((*i).end()-1))->base_x - base_x) < scaling ? 25:50
+        && abs((*((*i).end()-1))->base_y - base_y) < scaling ? 45:90       ){
+            return (*((*i).end()-1))->src;
+        }
     }
     for(auto i = piles[g_index].begin(); i < piles[g_index].end(); i++){
-
+        cout << "relative position is: " << abs((*((*i).end()-1))->base_y - base_y) << " deck is: " <<(*((*i).end()-1))->src << endl;
+        if(abs((*((*i).end()-1))->base_x - base_x) < scaling ? 25:50
+        && abs((*((*i).end()-1))->base_y - base_y) < scaling ? 45:90       ){
+            return (*((*i).end()-1))->src;
+        }
     }
     return -1;
     //flip and stock make no sence...
