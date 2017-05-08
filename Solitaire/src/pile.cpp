@@ -1,9 +1,14 @@
 #include"deck.hpp"
 
+Card* Pile::get_top(){
+    return &(*cards.end());
+}
+
 std::vector<Card> & Pile::get_cards(){
     std::vector<Card> & ref = cards;
     return ref;
 }
+
 Pile::Pile(){}
 
 Pile::~Pile(){}
@@ -23,4 +28,5 @@ void Pile::addCards(Card c) {
 void Pile::removeCards() {
     cards.pop_back();
 }
+
 

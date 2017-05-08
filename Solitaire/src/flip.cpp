@@ -24,3 +24,11 @@ void Flip::addCards(Card c) {
 void Flip::removeCards() {
     cards.pop_back();
 }
+
+std::vector<Card>::iterator Flip::get_iterator_begin(){
+    return cards.begin();
+}
+
+std::vector<Card>::iterator Flip::get_iterator_end() {
+    return cards.end();
+}
