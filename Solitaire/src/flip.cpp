@@ -33,3 +33,10 @@ std::vector<Card>::iterator Flip::get_iterator_begin(){
 std::vector<Card>::iterator Flip::get_iterator_end() {
     return cards.end();
 }
+
+void Flip::clrVec() {
+    cards.clear();
+    //todo might need to use this instead
+    //vector<Cards>()/swap(cards);
+    return;
+}

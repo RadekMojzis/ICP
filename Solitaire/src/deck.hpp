@@ -58,6 +58,7 @@ class Flip{
         Card* get_top();
         std::vector<Card>::iterator get_iterator_begin();
         std::vector<Card>::iterator get_iterator_end();
+        void clrVec();
 };
 
 class Pile{
@@ -75,6 +76,8 @@ class Pile{
         void removeCards();
         vector<Card> & get_cards();
         Card* get_top();
+        std::vector<Card>::iterator get_iterator_begin();
+        std::vector<Card>::iterator get_iterator_end();
 };
 
 /**

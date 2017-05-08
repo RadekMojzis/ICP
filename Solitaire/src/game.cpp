@@ -89,131 +89,117 @@ Card *Game::get_top(DeckID deck){
     // this can never happen but i hate warnings...
     return stock.get_top();
 }
-//TODO add multiple cards restriction.... from pile to foundation
+//TODO test na flipnute karty?
 bool Game::ActionValidity(Action act){
     DeckID src = act.getFrom();
     DeckID dst = act.getTo();
     CardIndex val = act.getCard();
-    switch (dst) {
-        case STOCK : {
-            return false;
-        }
-        case FLIP : {
-            if (src != STOCK) return false;
+    CardIndex topSrc;
+    if (src == 0) topSrc = stock.get_top()->get_id();
+    else if (src == 1) topSrc = flip.get_top()->get_id();
+    else if (src >= PILE1 && src <= PILE7) piles[src - PILE1].get_top()->get_id();
+    else foundations[src - F_CLUBS].get_top()->get_id();
+    if (dst == STOCK) {
+        return false;
+    }
+    if (dst == FLIP) {
+        if (src != STOCK) return false;
+        return true;
+    }
+    if (dst >= F_CLUBS && dst <= F_SPADES) {
+        //cannot drag from another foundation
+        if (src >= F_CLUBS && src <= F_SPADES)  return false;
+        //the first card must be ace of clubs
+        if (foundations[dst - F_CLUBS].getSize() == 0 && val != 0) return false;
+        //all the cards must be the right color
+        if (val >= (dst - F_CLUBS)*13 && val <= (dst - F_CLUBS)*13 + 12) return false;
+        //is not complete
+        if (foundations[dst - F_CLUBS].get_top()->get_id() == (dst - F_CLUBS)*13) return false;
+        //must be ascending
+        if (val - 1 != foundations[dst - F_CLUBS].get_top()->get_id()) return false;
+        //not top card moving (more cards drag)
+        if (val != topSrc)  return false;
+        return true;
+    }
+    if (dst >= PILE1 && dst <= PILE7) {
+        //if empty, only kings are allowed
+        if (piles[dst - PILE1].getSize() == 0) {
+            if (val != 12 && val != 25 && val != 38 && val != 51) return false;
             return true;
         }
-        case F_CLUBS : {
-            //the first card must be ace of clubs
-            if (foundations[0].getSize() == 0 && val != 0) return false;
-            //all the cards must be clubs
-            if (val > 12) return false;
-            //is not complete
-            if (foundations[0].get_top()->get_id() == 12) return false;
-            //must be ascending
-            if (val - 1 != foundations[0].get_top()->get_id()) return false;
-            return true;
-         }
-        case F_DIAMONDS : {
-            if (foundations[1].getSize() == 0 && val != 0) return false;
-            if (val > 25 && val < 13) return false;
-            if (foundations[1].get_top()->get_id() == 25) return false;
-            if (val - 1 != foundations[1].get_top()->get_id()) return false;
-            return true;
+        // if there is an ace in the pile (end of pile)
+        if (!(piles[dst - PILE1].get_top()->get_id() % 13)) return false;
+        CardIndex top = piles[dst - PILE1].get_top()->get_id();
+        if (val >= 13 && val < 26) {
+            if (val != top - 14 && val != top + 25) return false;
         }
-        case F_HEARTS : {
-            if (foundations[2].getSize() == 0 && val != 0) return false;
-            if (val > 38 && val < 26) return false;
-            if (foundations[2].get_top()->get_id() == 38) return false;
-            if (val - 1 != foundations[2].get_top()->get_id()) return false;
-            return true;
+        else if (val >= 26 && val < 39) {
+            if (val != top - 27 && val != top + 12) return false;
         }
-        case F_SPADES : {
-            if (foundations[3].getSize() == 0 && val != 0) return false;
-            if (val > 51 && val < 39) return false;
-            if (foundations[3].get_top()->get_id() == 51) return false;
-            if (val - 1 != foundations[3].get_top()->get_id()) return false;
-            return true;
-        }
-        case PILE1 : {
-            if (piles[0].getSize() == 0 && val != 12 && val != 25 && val != 38 && val != 51) return false;
-            if (!(piles[0].get_top()->get_id() % 13)) return false;
-            CardIndex top = piles[0].get_top()->get_id();
-            if (val != top + 13 && val != top + 26 && val != top - 13 && val != top - 26) return false;
-            return true;
-        }
-        case PILE2 : {
-            if (piles[1].getSize() == 0 && val != 12 && val != 25 && val != 38 && val != 51) return false;
-            if (!(piles[1].get_top()->get_id() % 13)) return false;
-            CardIndex top = piles[1].get_top()->get_id();
-            if (val != top + 13 && val != top + 26 && val != top - 13 && val != top - 26) return false;
-            return true;
-        }
-        case PILE3 : {
-            if (piles[2].getSize() == 0 && val != 12 && val != 25 && val != 38 && val != 51) return false;
-            if (!(piles[2].get_top()->get_id() % 13)) return false;
-            CardIndex top = piles[2].get_top()->get_id();
-            if (val != top + 13 && val != top + 26 && val != top - 13 && val != top - 26) return false;
-            return true;
-        }
-        case PILE4 : {
-            if (piles[3].getSize() == 0 && val != 12 && val != 25 && val != 38 && val != 51) return false;
-            if (!(piles[3].get_top()->get_id() % 13)) return false;
-            CardIndex top = piles[3].get_top()->get_id();
-            if (val != top + 13 && val != top + 26 && val != top - 13 && val != top - 26) return false;
-            return true;
-        }
-        case PILE5 : {
-            if (piles[4].getSize() == 0 && val != 12 && val != 25 && val != 38 && val != 51) return false;
-            if (!(piles[4].get_top()->get_id() % 13)) return false;
-            CardIndex top = piles[4].get_top()->get_id();
-            if (val != top + 13 && val != top + 26 && val != top - 13 && val != top - 26) return false;
-            return true;
-        }
-        case PILE6 : {
-            if (piles[5].getSize() == 0 && val != 12 && val != 25 && val != 38 && val != 51) return false;
-            if (!(piles[5].get_top()->get_id() % 13)) return false;
-            CardIndex top = piles[5].get_top()->get_id();
-            if (val != top + 13 && val != top + 26 && val != top - 13 && val != top - 26) return false;
-            return true;
-        }
-        case PILE7 : {
-            if (piles[6].getSize() == 0 && val != 12 && val != 25 && val != 38 && val != 51) return false;
-            if (!(piles[6].get_top()->get_id() % 13)) return false;
-            CardIndex top = piles[6].get_top()->get_id();
-            if (val != top + 13 && val != top + 26 && val != top - 13 && val != top - 26) return false;
-            return true;
-        }
-        default: return false;
+        else if (val != top + 12 && val != top + 25 && val != top - 14 && val != top - 27) return false;
+        return true;
     }
 }
 
 void Game::execute_action(Action act) {
     if (!(ActionValidity(act))) return;
     DeckID src = act.getFrom();
-    switch (src) {
-        case STOCK : {
-            if (stock.getSize() > 0) {
-                stock.removeCards();
-                break;
-            }
-            if (flip.getSize() > 0) {
-                for (std::vector<Card>::iterator it = flip.get_iterator_begin(); it != flip.get_iterator_end(); ++it) {
-                    stock.addCards(*it);
-                }
-                break;
-            }
-            return; //both flip and stock are empty
+    DeckID dst = act.getTo();
+    CardIndex c = act.getCard();
+    if (src == STOCK) {
+        if (stock.getSize() > 0) {
+            Card *tmp = stock.get_top();
+            stock.removeCards();
+            flip.addCards(*tmp);
         }
-        case FLIP : {
-            if (flip.getSize() == 0) return;
-            flip.removeCards();
-            break;
+        else if (flip.getSize() > 0) {
+            //flipping the stack uppside down
+            for (std::vector<Card>::iterator it = flip.get_iterator_end() - 1; it >= flip.get_iterator_begin(); --it) {
+                stock.addCards(*it);
+            }
+            flip.clrVec();
+            return; //TODO might wanna change...
         }
-        case F_CLUBS : {}
-        case F_DIAMONDS : {}
-        case F_HEARTS : {}
-        case F_SPADES : {
-
+        return; //both flip and stock are empty
+    }
+    if (src == FLIP) {
+        if (flip.getSize() == 0) return;
+        Card *tmp = flip.get_top();
+        flip.removeCards();
+        //from flip you can put into foundation or piles
+        if (dst >= F_CLUBS && dst <= F_SPADES)  foundations[dst-F_CLUBS].addCards(*tmp);
+        if (dst >= PILE1 && dst <= PILE7)   piles[dst-PILE1].addCards(*tmp);
+    }
+    if (src >= F_CLUBS && src <= F_SPADES) {
+        Card *tmp = foundations[src-F_CLUBS].get_top();
+        foundations[src - F_CLUBS].removeCards();
+        //from foundation you only can move cards to piles
+        piles[dst-PILE1].addCards(*tmp);
+    }
+    if (src >= PILE1 && src <= PILE7) {
+        if (dst < PILE1 || dst > PILE7) {
+            Card *tmp = piles[src-PILE1].get_top();
+            piles[src - PILE1].removeCards();
+            foundations[dst-F_CLUBS].addCards(*tmp);
+        }
+        // pile to pile
+        else if (act.getCard() == piles[src - PILE1].get_top()->get_id()) {
+            Card *tmp = piles[src-PILE1].get_top();
+            piles[src - PILE1].removeCards();
+            piles[dst - PILE1].addCards(*tmp);
+        }
+        else {  // more cards dragged
+            Card * topCard = piles[src-PILE1].get_top();
+            CardIndex topId = topCard->get_id();
+            std::vector<Card> tmp;
+            while (topId != c) {
+                tmp.push_back(*topCard);
+                topCard = piles[src-PILE1].get_top();
+                topId = topCard->get_id();
+            }
+            for (std::vector<Card>::iterator it = tmp.end() - 1; it != tmp.begin(); --it) {
+                piles[dst-PILE1].addCards(*it);
+            }
         }
     }
     return;
