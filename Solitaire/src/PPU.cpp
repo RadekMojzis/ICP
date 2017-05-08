@@ -1,11 +1,19 @@
 #include"interface.hpp"
 #include<iostream>
+#include<string>
 using namespace std;
 
 
 
 PPU::PPU(){
-    cout << "PPU is being initialised..." << endl;
+    draw_game();
+    string command;
+    while((cin >> command) != "quit"){
+        draw_game();
+
+    }
+
+
 };
 
 void PPU::draw_game(){
@@ -56,6 +64,10 @@ void PPU::draw_deck(DeckID deck){
 void PPU::draw_card(Card *card){
     if(!card->is_up()){
         cout << "[XX]";
+        return;
+    }
+    if(card->get_id() > 52){
+        cout << "[__]";
         return;
     }
     vector<string> color = {"C", "D", "H", "S"};

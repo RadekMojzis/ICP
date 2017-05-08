@@ -5,7 +5,18 @@ Card* Foundation::get_top(){
         return & blank;
     return &(*cards.end());
 }
+Foundation::Foundation(DeckID ident){
+    id = ident;
+    if(id == F_HEARTS)
+        blank = Card(56);
+    if(id == F_SPADES)
+        blank = Card(55);
+    if(id == F_DIAMONDS)
+        blank = Card(54);
+    if(id == F_CLUBS)
+        blank = Card(53);
 
+}
 Foundation::~Foundation(){}
 
 DeckID Foundation::getID() {
