@@ -31,3 +31,11 @@ void Pile::removeCards() {
 void Pile::push_back(int card){
     cards.push_back(Card(card));
 }
+
+std::vector<Card>::iterator Pile::get_iterator_begin(){
+    return cards.begin();
+}
+
+std::vector<Card>::iterator Pile::get_iterator_end() {
+    return cards.end();
+}
