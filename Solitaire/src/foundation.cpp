@@ -34,3 +34,11 @@ void Foundation::addCards(Card c) {
 void Foundation::removeCards() {
     cards.pop_back();
 }
+
+std::vector<Card>::iterator Foundation::get_iterator_begin(){
+    return cards.begin();
+}
+
+std::vector<Card>::iterator Foundation::get_iterator_end() {
+    return cards.end();
+}

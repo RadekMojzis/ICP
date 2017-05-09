@@ -57,4 +57,12 @@ void Stock::removeCards() {
     }
 }
 
+std::vector<Card>::iterator Stock::get_iterator_begin(){
+    return cards.begin();
+}
+
+std::vector<Card>::iterator Stock::get_iterator_end() {
+    return cards.end();
+}
+
 
