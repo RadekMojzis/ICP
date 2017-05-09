@@ -66,6 +66,23 @@ protected:
 };
 
 
+class button: public QPushButton{
+    Q_OBJECT
+    private:
+        int g_id;
+        GPU *gpu;
+        int pos_x;
+        int pos_y;
+public:
+        button(QString name, QWidget * parent, int gid,bool scaling,int x, int y, GPU*main_gpu);
+        void rescale(bool scaling, int gameindex);
+signals:
+    void clicked(int id);
+protected:
+    void mousePressEvent ( QMouseEvent * event ) {emit clicked(g_id);};
+};
+
+
 class GPU: public QWidget{
     Q_OBJECT
     // you put cards from deck here
@@ -74,10 +91,7 @@ class GPU: public QWidget{
         vector <QPixmap*> cards;
         void load_images();
         QPushButton *new_game_btn;
-        vector<QPushButton*> load;
-        vector<QPushButton*> save;
-        vector<QPushButton*> undo;
-        vector<QPushButton*> exit;
+        vector<button*> load;
 
         vector<int> game_slot_ocupied;
         vector<vector<vector<gcard*>>> foundations;
@@ -86,9 +100,12 @@ class GPU: public QWidget{
         vector<gcard*> stock;
         void rescale( bool scaling, int gameidx);
 
+               vector<button*> save;
+               vector<button*> undo;
+               vector<button*> exit;
     public:
         int get_dst_deck(int base_x,int base_y, int g_index);
-        void exit_game(int id);
+
         vector<Game*> game;
         bool scaling = false;
         void execute_action(int src, int dst, int card,int g_id);
@@ -102,19 +119,12 @@ class GPU: public QWidget{
         ~GPU(){};
 public slots:
     void new_game_clicked(){new_game();};
+    void exit_game(int id);
+    void undo_turn(int id){game[id]->undo();};
+    void load_game(int id){game[id]->load("ahoj");};
+    void save_game(int id){game[id]->load("ahoj");};
+
 };
 
-
-class button: public QPushButton{
-    Q_OBJECT
-    private:
-        int g_id;
-        GPU *gpu;
-        int pos_x;
-        int pos_y;
-public:
-        button(QString name, QWidget * parent, int gid,bool scaling,int x, int y, GPU*main_gpu);
-        void rescale(bool scaling, int gameindex);
-};
 
 #endif

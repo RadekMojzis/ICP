@@ -25,7 +25,7 @@ class Game{
 		void execute_action(Action act);
         std::vector<Card> & get_deck(DeckID deck);
         Card *get_top(DeckID deck);
-		const std::vector<Card> & get_stock();
+        const std::vector<Card> & get_stock();
 
 
         void undo(){};

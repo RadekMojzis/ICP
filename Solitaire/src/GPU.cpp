@@ -42,14 +42,12 @@ GPU::GPU(){
     new_game_btn->move(0, 750);
     connect(new_game_btn, SIGNAL(clicked()), this, SLOT(new_game_clicked()));
     window.resize(1200, 800);
-    window.show();
     window.setWindowTitle("Solitere");
 
     load_images();
+    new_game();
 
     window.show();
-
-    new_game();
     qApp->exec();
     for(auto g = game.begin(); g < game.end(); g++)
         delete *g;
@@ -116,7 +114,17 @@ void GPU::new_game(){
 
                 if(active >= 1)
                     scaling = true;
+                load[active] = (new button("Load", &window, active, scaling, 0, 625, this));
+                save[active] = (new button("Save", &window, active, scaling, 75, 625, this));
+                undo[active] = (new button("Undo", &window, active, scaling, 0, 550, this));
+                exit[active] = (new button("Exit", &window, active, scaling, 75, 550, this));
+                connect(exit[active], SIGNAL(clicked(int)), this, SLOT(exit_game(int)));
+                connect(load[active], SIGNAL(clicked(int)), this, SLOT(load_game(int)));
+                connect(save[active], SIGNAL(clicked(int)), this, SLOT(save_game(int)));
+                connect(undo[active], SIGNAL(clicked(int)), this, SLOT(undo_turn(int)));
+
                 draw_game(active);
+                return;
             }
         }
         return;
@@ -128,12 +136,22 @@ void GPU::new_game(){
     flip.resize(flip.size()+1);
 
     game.push_back(new Game());
-    load.push_back(new QPushButton());
 
     if(active == 1)
        rescale(true, 0);
     if(active >= 1)
         scaling = true;
+    cout << "Ahoj!" << endl;
+
+    load.push_back(new button("Load", &window, active, scaling, 0, 625, this));
+    save.push_back(new button("Save", &window, active, scaling, 75, 625, this));
+    undo.push_back(new button("Undo", &window, active, scaling, 0, 550, this));
+    exit.push_back(new button("Exit", &window, active, scaling, 75, 550, this));
+    connect(exit[active], SIGNAL(clicked(int)), this, SLOT(exit_game(int)));
+    connect(load[active], SIGNAL(clicked(int)), this, SLOT(load_game(int)));
+    connect(save[active], SIGNAL(clicked(int)), this, SLOT(save_game(int)));
+    connect(undo[active], SIGNAL(clicked(int)), this, SLOT(undo_turn(int)));
+
     for(int i = 0; i < 4; i++)
         foundations[active].push_back(vector<gcard*>());
 
@@ -146,6 +164,12 @@ void GPU::new_game(){
 void GPU::exit_game(int id){
     clear(id);
     delete game[id];
+    delete load[id];
+    delete save[id];
+    delete undo[id];
+    delete exit[id];
+
+
     game_slot_ocupied[id] = 0;
 }
 
@@ -162,6 +186,10 @@ void GPU::rescale(bool scaling, int gameidx){
     }
     flip[gameidx]->rescale(scaling, gameidx);
     stock[gameidx]->rescale(scaling, gameidx);
+    load[gameidx]->rescale(scaling, gameidx);
+    save[gameidx]->rescale(scaling, gameidx);
+    undo[gameidx]->rescale(scaling, gameidx);
+    exit[gameidx]->rescale(scaling, gameidx);
 }
 
 void GPU::execute_action(int src, int dst, int card,int g_id){
@@ -177,11 +205,13 @@ void GPU::clear(int id){
         for(auto g = (*f).begin(); g < (*f).end(); g++){
             delete *g;
         }
+        (*f).resize(0);
     }
     for(auto f = piles[id].begin(); f < piles[id].end(); f++){
         for(auto g = (*f).begin(); g < (*f).end(); g++){
             delete *g;
         }
+        (*f).resize(0);
     }
 
     delete flip[id];

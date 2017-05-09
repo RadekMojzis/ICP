@@ -1,4 +1,5 @@
 #include "gcard.h"
+#include <iostream>
 button::button(QString name,
                QWidget * parent,
                int gid, bool scaling,
@@ -7,10 +8,11 @@ button::button(QString name,
     g_id = gid;
     pos_x = x;
     pos_y = y;
-    resize(150, 75);
+    resize(75, 75);
     gpu = main_gpu;
     rescale(scaling, gid);
     move(pos_x, pos_y);
+    show();
 }
 
 void button::rescale(bool scaling, int gameindex){
@@ -26,7 +28,7 @@ void button::rescale(bool scaling, int gameindex){
         pos_x += 600;
     }
     if(scaling){
-        resize(75,36);
+        resize(36,36);
     }
     move(pos_x, pos_y);
 }
