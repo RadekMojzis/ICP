@@ -212,23 +212,20 @@ void Game::save(string file) {
 
     for (std::vector<Card>::iterator it = stock.get_iterator_begin(); it != stock.get_iterator_end(); ++it) {
         //outfile << "S|" << to_string(*it.get_id()) << "-" << *it.is_up() << "|";
-        outfile << "S" << to_string((*it).get_id()) << "?" << (*it).is_up() << "\n";
+        outfile << to_string((*it).get_id()) << "S" << (*it).is_up() << "\n";
     }
     for (std::vector<Card>::iterator it = flip.get_iterator_begin(); it != flip.get_iterator_end(); ++it) {
-        //outfile << "F|" << to_string(*it.get_id()) << "-" << *it.is_up() << "|";
-        outfile << "F" << to_string((*it).get_id()) << "?" << (*it).is_up() << "\n";
+        outfile << to_string((*it).get_id()) << "F" << (*it).is_up() << "\n";
     }
     outfile << "\n";
     for (int i = 0; i < 7; i++) {
         for (std::vector<Card>::iterator it = piles[i].get_iterator_begin(); it != piles[i].get_iterator_end(); ++it) {
-            //outfile << "P" << to_string(i) << "|" << to_string(*it.get_id()) << "-" << *it.is_up() << "|";
-            outfile << "P" << to_string((*it).get_id()) << "?" << (*it).is_up() << "\n";
+            outfile << to_string((*it).get_id()) << "P" << to_string(i) << (*it).is_up() << "\n";
         }
     }
     for (int i = 0; i < 4; i++) {
         for (std::vector<Card>::iterator it = foundations[i].get_iterator_begin(); it != foundations[i].get_iterator_end(); ++it) {
-            //ooutfile << "E" << to_string(i) << "|" << to_string(*it.get_id()) << "-" << *it.is_up() << "|";
-            outfile << "E" << to_string((*it).get_id()) << "?" << (*it).is_up() << "\n";
+            outfile << to_string((*it).get_id()) << "E" << to_string(i) << (*it).is_up() << "\n";
         }
     }
     outfile.close();
@@ -240,7 +237,34 @@ void Game::load(string file) {
     infile.open(file);
     while (getline (infile, line) ) {
         if(line.find('S') != string::npos) {
-            size_t  faceUpPos = line.find('?') + 1;
+            size_t  faceUpPos = line.find('S') + 1;
+            int val  = stoi(line, nullptr);
+            bool fUp = line[faceUpPos] - 48;    //todo hope so
+            Card c(val, fUp);
+            stock.addCards(c);
+        }
+        if(line.find('F') != string::npos) {
+            size_t  faceUpPos = line.find('F') + 1;
+            int val  = stoi(line, nullptr);
+            bool fUp = line[faceUpPos] - 48;
+            Card c(val, fUp);
+            flip.addCards(c);
+        }
+        if(line.find('P') != string::npos) {
+            size_t faceUpPos = line.find('P') + 2;
+            int a = line[faceUpPos - 1] - 48;
+            int val = stoi(line, nullptr);
+            bool fUp = line[faceUpPos] - 48;
+            Card c(val, fUp);
+            piles[a].addCards(c);
+        }
+        if(line.find('E') != string::npos) {
+            size_t faceUpPos = line.find('E') + 2;
+            int a = line[faceUpPos - 1] - 48;
+            int val = stoi(line, nullptr);
+            bool fUp = line[faceUpPos] - 48;
+            Card c(val, fUp);
+            foundations[a].addCards(c);
         }
     }
     infile.close();

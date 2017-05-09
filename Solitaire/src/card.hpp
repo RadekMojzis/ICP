@@ -18,6 +18,7 @@ class Card{
   public:
         Card(){id = 53;}
         Card(int ident){id = ident; faceUP = true;};
+		Card(int ident, bool b): id{ident}, faceUP{b} {};
         int get_id(){return faceUP ? id : 52;};
         bool is_up(){return faceUP;};
         void flip(){faceUP = !faceUP;}
