@@ -64,7 +64,7 @@ protected:
     void mouseDoubleClickEvent( QMouseEvent * event ) ;
     void mouseMoveEvent( QMouseEvent * event ) ;
 };
-
+#include <iostream>
 
 class button: public QPushButton{
     Q_OBJECT
@@ -79,7 +79,7 @@ public:
 signals:
     void clicked(int id);
 protected:
-    void mousePressEvent ( QMouseEvent * event ) {emit clicked(g_id);};
+    void mousePressEvent ( QMouseEvent * event ) {emit clicked(g_id); cout << g_id<<endl;};
 };
 
 
@@ -94,16 +94,18 @@ class GPU: public QWidget{
         vector<button*> load;
 
         vector<int> game_slot_ocupied;
-        vector<vector<vector<gcard*>>> foundations;
+        vector<vector<gcard*>> foundations;
         vector<vector<vector<gcard*>>> piles;
         vector<gcard*> flip;
         vector<gcard*> stock;
-        void rescale( bool scaling, int gameidx);
 
-               vector<button*> save;
-               vector<button*> undo;
-               vector<button*> exit;
+        vector<button*> save;
+        vector<button*> undo;
+        vector<button*> exit;
+
     public:
+
+        void rescale( bool scaling, int gameidx);
         int get_dst_deck(int base_x,int base_y, int g_index);
 
         vector<Game*> game;
@@ -115,6 +117,7 @@ class GPU: public QWidget{
         void draw_card(Card *card, DeckID decks, int gameid);
         int run();
         void clear(int id);
+        void redraw(int g_id);
         GPU();
         ~GPU(){};
 public slots:

@@ -35,6 +35,7 @@ class Foundation{
         DeckSize getSize();
         bool ActionValidity();
         void addCards(Card c);
+        void push_back(int c);
         void removeCards();
         Card* get_top();
         std::vector<Card>::iterator get_iterator_begin();
@@ -57,6 +58,7 @@ class Flip{
         bool ActionValidity();
         void addCards(Card c);
         void removeCards();
+        void push_back(int c);
         Card* get_top();
         std::vector<Card>::iterator get_iterator_begin();
         std::vector<Card>::iterator get_iterator_end();
@@ -71,6 +73,7 @@ class Pile{
         Pile(DeckID ident){id = ident; blank = Card(57);};
         ~Pile();
         void push_back(int card);
+        void push_back(int card, bool revealed);
         DeckID getID();
         DeckSize getSize();
         bool ActionValidity();
@@ -102,7 +105,7 @@ class Stock{
         bool ActionValidity(ActionID action);
         //bool ActionValidity(ActionID action, vector<Card> cards);
 
-        void addCards(Card c);
+        void push_back(int c);
         void removeCards();
         Card* get_top();
         std::vector<Card>::iterator get_iterator_begin();

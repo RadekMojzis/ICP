@@ -17,7 +17,7 @@ class Game{
 		std::vector<Foundation> foundations;
 
 		std::vector<Action> history;
-		
+
 	public:
         Game();
         ~Game();
@@ -27,10 +27,10 @@ class Game{
         Card *get_top(DeckID deck);
         const std::vector<Card> & get_stock();
 
-
+        void print();
         void undo(){};
-        void save(string file){};
-        void load(string file){};
+        void save(string file);
+        void load(string file);
         void quit(){};
 };
 

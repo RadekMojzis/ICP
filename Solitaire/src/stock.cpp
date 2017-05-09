@@ -5,7 +5,7 @@ Stock::~Stock(){}
 Card* Stock::get_top(){
     if(cards.empty())
         return & blank;
-    return &(*cards.end());
+    return &(*(cards.end()-1));
 }
 
 
@@ -45,8 +45,8 @@ bool Stock::ActionValidity(ActionID action) {
     }
 }
 
-void Stock::addCards(Card c){
-    cards.push_back(c);
+void Stock::push_back(int c){
+    cards.push_back(Card(c, false));
 }
 
 void Stock::removeCards() {

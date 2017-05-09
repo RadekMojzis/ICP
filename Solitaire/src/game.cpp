@@ -10,7 +10,24 @@ int chaos (int i) {
     return (std::rand()+a)%i;
 }
 
+void Game::print(){
+    stock.get_top()->flip();
+    cout << "stock:" << stock.get_top()->get_true_id() << endl;
+    cout << "flip:" << flip.get_top()->get_true_id() << endl;
+    cout << "piles:" << endl;
+    for(int i = 0; i < 7; i++){
+        for(int j = 0; j < piles[i].getSize(); j++){
+            cout << piles[i].get_cards()[j].get_true_id() << ", ";
+        }
+        cout << endl;
+    }
+    cout << "foundations:" << endl;
 
+    cout << "C" <<foundations[0].get_top()->get_true_id() << endl;
+    cout << "D" <<foundations[1].get_top()->get_true_id() << endl;
+    cout << "H" <<foundations[2].get_top()->get_true_id() << endl;
+    cout << "S" <<foundations[3].get_top()->get_true_id() << endl;
+}
 
 Game::Game(){
     cout << "game is being initialised" << endl;
@@ -30,16 +47,33 @@ Game::Game(){
             shuffle.pop_back();
         }
     }
-    vector<Card> dek;
-    for(auto c = shuffle.begin(); c < shuffle.end(); c++){
-        dek.push_back(Card(*c));
+    while(shuffle.size()){
+        stock.push_back(shuffle.back());
+        shuffle.pop_back();
     }
 
-    vector<Card> &crd = dek;
-    stock = Stock(crd, STOCK);
     for(int i = 9; i < 13; i++)
         foundations.push_back(Foundation(i));
+    for(int i = 0; i < 7; i++){
+        for(int j = 0; j <= i; j++){
+            if(i == j){
+                piles[i].get_cards()[j].flip();
+            }
+        }
+    }
 
+    for(int i = 0; i < 7; i++){
+        for(int j = 0; j <= i; j++){
+            //cout << piles[i].get_cards()[j].is_up() << ", ";
+        }
+        //cout << endl;
+    }
+    for(int i = 0; i < 7; i++){
+        for(int j = 0; j <= i; j++){
+            //cout << piles[i].get_cards()[j].get_id() << ", ";
+        }
+        // << endl;
+    }
 }
 
 Game::~Game(){
@@ -76,11 +110,11 @@ Card *Game::get_top(DeckID deck){
         return stock.get_top(); break;
     case FLIP:
         return flip.get_top(); break;
-    case F_HEARTS:
+    case F_CLUBS:
         return foundations[0].get_top(); break;
     case F_DIAMONDS:
         return foundations[1].get_top(); break;
-    case F_CLUBS:
+    case F_HEARTS:
         return foundations[2].get_top(); break;
     case F_SPADES:
         return foundations[3].get_top(); break;
@@ -143,20 +177,21 @@ bool Game::ActionValidity(Action act){
 }
 
 void Game::execute_action(Action act) {
-    if (!(ActionValidity(act))) return;
+    print(); // action je dobre
+    //if (!(ActionValidity(act))) return;
     DeckID src = act.getFrom();
     DeckID dst = act.getTo();
     CardIndex c = act.getCard();
     if (src == STOCK) {
-        if (stock.getSize() > 0) {
-            Card *tmp = stock.get_top();
+        if (stock.getSize()) {
+            flip.push_back(stock.get_top()->get_true_id());
             stock.removeCards();
-            flip.addCards(*tmp);
-        }
+            return;
+        } // now it works
         else if (flip.getSize() > 0) {
             //flipping the stack uppside down
-            for (std::vector<Card>::iterator it = flip.get_iterator_end() - 1; it >= flip.get_iterator_begin(); --it) {
-                stock.addCards(*it);
+            for (auto it = flip.get_iterator_end() - 1; it >= flip.get_iterator_begin(); --it) {
+                stock.push_back((*it).get_true_id());
             }
             flip.clrVec();
             return; //TODO might wanna change...
@@ -165,41 +200,46 @@ void Game::execute_action(Action act) {
     }
     if (src == FLIP) {
         if (flip.getSize() == 0) return;
-        Card *tmp = flip.get_top();
+        if (dst >= PILE1 && dst <= PILE7){
+            piles[dst-PILE1].push_back(flip.get_top()->get_true_id());
+            piles[dst-PILE1].get_top()->flip();
+        }
+        if (dst >= F_CLUBS && dst <= F_SPADES){
+            foundations[dst-F_CLUBS].push_back(flip.get_top()->get_true_id());
+        }
         flip.removeCards();
         //from flip you can put into foundation or piles
-        if (dst >= F_CLUBS && dst <= F_SPADES)  foundations[dst-F_CLUBS].addCards(*tmp);
-        if (dst >= PILE1 && dst <= PILE7)   piles[dst-PILE1].addCards(*tmp);
     }
     if (src >= F_CLUBS && src <= F_SPADES) {
-        Card *tmp = foundations[src-F_CLUBS].get_top();
+        piles[dst-PILE1].push_back(foundations[src-F_CLUBS].get_top()->get_true_id(), true);
         foundations[src - F_CLUBS].removeCards();
         //from foundation you only can move cards to piles
-        piles[dst-PILE1].addCards(*tmp);
+
     }
     if (src >= PILE1 && src <= PILE7) {
-        if (dst < PILE1 || dst > PILE7) {
-            Card *tmp = piles[src-PILE1].get_top();
+        if (dst > PILE7) {
+            foundations[dst-F_CLUBS].push_back(piles[src-PILE1].get_top()->get_true_id());
             piles[src - PILE1].removeCards();
-            foundations[dst-F_CLUBS].addCards(*tmp);
         }
         // pile to pile
-        else if (act.getCard() == piles[src - PILE1].get_top()->get_id()) {
-            Card *tmp = piles[src-PILE1].get_top();
-            piles[src - PILE1].removeCards();
-            piles[dst - PILE1].addCards(*tmp);
+        else if (piles[src-PILE1].get_top()->get_true_id() == act.getCard()) {
+            piles[dst - PILE1].push_back(piles[src-PILE1].get_top()->get_true_id(), true);
+            piles[src-PILE1].removeCards();
         }
-        else {  // more cards dragged
-            Card * topCard = piles[src-PILE1].get_top();
-            CardIndex topId = topCard->get_id();
-            std::vector<Card> tmp;
-            while (topId != c) {
-                tmp.push_back(*topCard);
-                topCard = piles[src-PILE1].get_top();
-                topId = topCard->get_id();
+        else{
+            auto it = piles[src-PILE1].get_cards();
+            int remove = 0;
+            int flag = 0;
+            for(int i = 0; i < it.size(); i++){
+                if(it[i].get_true_id() == act.getCard())
+                    flag = 1;
+                if(flag){
+                    piles[dst-PILE1].push_back(it[i].get_true_id(), true);
+                    remove++;
+                }
             }
-            for (std::vector<Card>::iterator it = tmp.end() - 1; it != tmp.begin(); --it) {
-                piles[dst-PILE1].addCards(*it);
+            for(int i = 0; i < remove; i++){
+                piles[src-PILE1].removeCards();
             }
         }
     }
@@ -240,8 +280,7 @@ void Game::load(string file) {
             size_t  faceUpPos = line.find('S') + 1;
             int val  = stoi(line, nullptr);
             bool fUp = line[faceUpPos] - 48;    //todo hope so
-            Card c(val, fUp);
-            stock.addCards(c);
+            stock.push_back(val);
         }
         if(line.find('F') != string::npos) {
             size_t  faceUpPos = line.find('F') + 1;

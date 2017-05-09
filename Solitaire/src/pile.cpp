@@ -1,7 +1,9 @@
 #include"deck.hpp"
 
 Card* Pile::get_top(){
-    return &(*cards.end());
+    //if(getSize())
+        return &(*(cards.end()-1));
+    //return &blank;
 }
 
 std::vector<Card> & Pile::get_cards(){
@@ -26,10 +28,16 @@ void Pile::addCards(Card c) {
 
 void Pile::removeCards() {
     cards.pop_back();
+    if(cards.size())
+        get_top()->flip();
 }
 
 void Pile::push_back(int card){
     cards.push_back(Card(card));
+}
+
+void Pile::push_back(int card, bool revealed){
+    cards.push_back(Card(card, revealed));
 }
 
 std::vector<Card>::iterator Pile::get_iterator_begin(){

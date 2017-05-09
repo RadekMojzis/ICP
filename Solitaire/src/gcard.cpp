@@ -67,7 +67,7 @@ void gcard::mouseMoveEvent ( QMouseEvent * event ){
 }
 
 void gcard::slotClicked(QMouseEvent * event){
-    cout << number << endl;
+    //cout << number << endl;
     if(src == STOCK)
         gpu->execute_action(src, src, -1, game_id);
 
@@ -84,8 +84,9 @@ void gcard::slotReleased(QMouseEvent * event){
 
         int dst_deck = gpu->get_dst_deck(this->pos().x(), this->pos().y(), game_id);
         if(dst_deck != src && dst_deck > 0){
-            //cout << "generating action src: " << src << ", dst: "<< dst_deck <<", Card: " << number << ", Game: " << game_id << endl;
+            cout << "generating action src: " << src << ", dst: "<< dst_deck <<", Card: " << number << ", Game: " << game_id << endl;
             gpu->execute_action(src, dst_deck, number, game_id);
+            return;
         }
     }
     move(base_x, base_y);

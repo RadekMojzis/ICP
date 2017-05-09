@@ -3,7 +3,7 @@
 Card* Foundation::get_top(){
     if(cards.empty())
         return & blank;
-    return &(*cards.end());
+    return &(*(cards.end()-1));
 }
 Foundation::Foundation(DeckID ident){
     id = ident;
@@ -30,6 +30,11 @@ DeckSize Foundation::getSize() {
 void Foundation::addCards(Card c) {
     cards.push_back(c);
 }
+
+void Foundation::push_back(int c) {
+    cards.push_back(Card(c, true));
+}
+
 
 void Foundation::removeCards() {
     cards.pop_back();

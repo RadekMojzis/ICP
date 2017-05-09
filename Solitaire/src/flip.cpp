@@ -5,7 +5,7 @@ Card* Flip::get_top(){
     if(cards.empty()){
         return &blank;
     }
-    return &(*cards.end());
+    return &(*(cards.end()-1));
 }
 
 Flip::~Flip(){}
@@ -16,6 +16,10 @@ DeckID Flip::getID() {
 
 DeckSize Flip::getSize() {
     return cards.size();
+}
+
+void Flip::push_back(int c) {
+    cards.push_back(Card(c, true));
 }
 
 void Flip::addCards(Card c) {

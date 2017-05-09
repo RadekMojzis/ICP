@@ -12,17 +12,19 @@ typedef unsigned int CardPosition;
 
 class Card{
 		int id;
-		bool faceUP;
+        bool faceUP = false;
 		CardPosition position;
 		
   public:
-        Card(){id = 53;}
-        Card(int ident){id = ident; faceUP = true;};
-		Card(int ident, bool b): id{ident}, faceUP{b} {};
+        Card(){id = 53; faceUP = true;}
+        Card(int ident);
+        Card(int ident, bool b): id{ident}, faceUP{b} {};
         int get_id(){return faceUP ? id : 52;};
-        bool is_up(){return faceUP;};
-        void flip(){faceUP = !faceUP;}
+        int get_true_id(){return id;};
 
+        bool is_up(){return faceUP;};
+        void flip();
+        Card(Card*copy);
 		void setPosition(CardPosition pos);
 		CardPosition getPosition();
 };
