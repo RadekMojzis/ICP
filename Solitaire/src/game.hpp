@@ -26,11 +26,9 @@ class Game{
         std::vector<Card> & get_deck(DeckID deck);
         Card *get_top(DeckID deck);
 		const std::vector<Card> & get_stock();
-
-
         void undo(){};
-        void save(string file){};
-        void load(string file){};
+        void save(string file);
+        void load(string file);
         void quit(){};
 };
 

@@ -1,6 +1,7 @@
 #include "game.hpp"
 #include<iostream>
 #include <algorithm>
+#include <fstream>
 using namespace std;
 
 int chaos (int i) {
@@ -95,8 +96,8 @@ bool Game::ActionValidity(Action act){
     DeckID dst = act.getTo();
     CardIndex val = act.getCard();
     CardIndex topSrc;
-    if (src == 0) topSrc = stock.get_top()->get_id();
-    else if (src == 1) topSrc = flip.get_top()->get_id();
+    if (src == STOCK) topSrc = stock.get_top()->get_id();
+    else if (src == FLIP) topSrc = flip.get_top()->get_id();
     else if (src >= PILE1 && src <= PILE7) piles[src - PILE1].get_top()->get_id();
     else foundations[src - F_CLUBS].get_top()->get_id();
     if (dst == STOCK) {
@@ -203,4 +204,44 @@ void Game::execute_action(Action act) {
         }
     }
     return;
+}
+
+void Game::save(string file) {
+    ofstream outfile;
+    outfile.open(file);
+
+    for (std::vector<Card>::iterator it = stock.get_iterator_begin(); it != stock.get_iterator_end(); ++it) {
+        //outfile << "S|" << to_string(*it.get_id()) << "-" << *it.is_up() << "|";
+        outfile << "S" << to_string((*it).get_id()) << "?" << (*it).is_up() << "\n";
+    }
+    for (std::vector<Card>::iterator it = flip.get_iterator_begin(); it != flip.get_iterator_end(); ++it) {
+        //outfile << "F|" << to_string(*it.get_id()) << "-" << *it.is_up() << "|";
+        outfile << "F" << to_string((*it).get_id()) << "?" << (*it).is_up() << "\n";
+    }
+    outfile << "\n";
+    for (int i = 0; i < 7; i++) {
+        for (std::vector<Card>::iterator it = piles[i].get_iterator_begin(); it != piles[i].get_iterator_end(); ++it) {
+            //outfile << "P" << to_string(i) << "|" << to_string(*it.get_id()) << "-" << *it.is_up() << "|";
+            outfile << "P" << to_string((*it).get_id()) << "?" << (*it).is_up() << "\n";
+        }
+    }
+    for (int i = 0; i < 4; i++) {
+        for (std::vector<Card>::iterator it = foundations[i].get_iterator_begin(); it != foundations[i].get_iterator_end(); ++it) {
+            //ooutfile << "E" << to_string(i) << "|" << to_string(*it.get_id()) << "-" << *it.is_up() << "|";
+            outfile << "E" << to_string((*it).get_id()) << "?" << (*it).is_up() << "\n";
+        }
+    }
+    outfile.close();
+}
+
+void Game::load(string file) {
+    ifstream infile;
+    string line;
+    infile.open(file);
+    while (getline (infile, line) ) {
+        if(line.find('S') != string::npos) {
+            size_t  faceUpPos = line.find('?') + 1;
+        }
+    }
+    infile.close();
 }

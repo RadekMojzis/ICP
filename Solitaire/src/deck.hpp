@@ -37,6 +37,8 @@ class Foundation{
         void addCards(Card c);
         void removeCards();
         Card* get_top();
+        std::vector<Card>::iterator get_iterator_begin();
+        std::vector<Card>::iterator get_iterator_end();
 };
 
 class Flip{
@@ -103,5 +105,7 @@ class Stock{
         void addCards(Card c);
         void removeCards();
         Card* get_top();
+        std::vector<Card>::iterator get_iterator_begin();
+        std::vector<Card>::iterator get_iterator_end();
     //const std::vector<Card> & get_cards();
 };
