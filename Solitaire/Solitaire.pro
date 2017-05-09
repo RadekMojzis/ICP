@@ -34,6 +34,7 @@ SOURCES += src/pile.cpp
 SOURCES += src/stock.cpp
 SOURCES += src/program.cpp
 SOURCES += src/gcard.cpp
+SOURCES += src/button.cpp
 
 HEADERS += src/interface.hpp
 HEADERS += src/action.hpp

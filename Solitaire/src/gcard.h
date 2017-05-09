@@ -5,7 +5,7 @@
 #include <vector>
 #include "deck.hpp"
 #include "game.hpp"
-
+#include <QPushButton>
 typedef int CardID;
 
 extern std::vector <QPixmap*> cards;
@@ -66,13 +66,20 @@ protected:
 };
 
 
-class GPU{
+class GPU: public QWidget{
+    Q_OBJECT
     // you put cards from deck here
     private:
         QWidget window;
         vector <QPixmap*> cards;
         void load_images();
+        QPushButton *new_game_btn;
+        vector<QPushButton*> load;
+        vector<QPushButton*> save;
+        vector<QPushButton*> undo;
+        vector<QPushButton*> exit;
 
+        vector<int> game_slot_ocupied;
         vector<vector<vector<gcard*>>> foundations;
         vector<vector<vector<gcard*>>> piles;
         vector<gcard*> flip;
@@ -81,8 +88,8 @@ class GPU{
 
     public:
         int get_dst_deck(int base_x,int base_y, int g_index);
+        void exit_game(int id);
         vector<Game*> game;
-        int active = -1;
         bool scaling = false;
         void execute_action(int src, int dst, int card,int g_id);
         void new_game();
@@ -90,9 +97,24 @@ class GPU{
         void draw_deck(DeckID deck, int i);
         void draw_card(Card *card, DeckID decks, int gameid);
         int run();
-        void clear();
+        void clear(int id);
         GPU();
-        ~GPU();
+        ~GPU(){};
+public slots:
+    void new_game_clicked(){new_game();};
+};
+
+
+class button: public QPushButton{
+    Q_OBJECT
+    private:
+        int g_id;
+        GPU *gpu;
+        int pos_x;
+        int pos_y;
+public:
+        button(QString name, QWidget * parent, int gid,bool scaling,int x, int y, GPU*main_gpu);
+        void rescale(bool scaling, int gameindex);
 };
 
 #endif

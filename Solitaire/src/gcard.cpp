@@ -2,7 +2,7 @@
 
 #include <QMouseEvent>
 #include "gcard.h"
-#include <iostream>
+
 using namespace std;
 
 void gcard::rescale(bool scaling ,int index ){
@@ -68,6 +68,9 @@ void gcard::mouseMoveEvent ( QMouseEvent * event ){
 
 void gcard::slotClicked(QMouseEvent * event){
     cout << number << endl;
+    if(src == STOCK)
+        gpu->execute_action(src, src, -1, game_id);
+
     if(disabled)
         return;
     base_drag_x = event->globalX();
@@ -75,23 +78,22 @@ void gcard::slotClicked(QMouseEvent * event){
 }
 
 void gcard::slotReleased(QMouseEvent * event){
-    (void) event;
-    move(base_x, base_y);
     if(next != nullptr)
          releasestack();
     if(drag_action){
-        int dst_deck = gpu->get_dst_deck(base_x, base_y, game_id);
-        //if(dst_deck == src)
-        cout << "generating action src: " << src << ", dst: "<< dst_deck <<", Card: " << number << ", Game: " << game_id << endl;
-        gpu->execute_action(src, dst_deck, number, game_id);
-    }
 
+        int dst_deck = gpu->get_dst_deck(this->pos().x(), this->pos().y(), game_id);
+        if(dst_deck != src && dst_deck > 0){
+            //cout << "generating action src: " << src << ", dst: "<< dst_deck <<", Card: " << number << ", Game: " << game_id << endl;
+            gpu->execute_action(src, dst_deck, number, game_id);
+        }
+    }
+    move(base_x, base_y);
     drag_action = false;
 }
 
 void gcard::slotDoubleclick(QMouseEvent * event){
     (void) event;
-    gpu->execute_action(src, src, -1, game_id);
 }
 
 void gcard::slotmovement(QMouseEvent * event){

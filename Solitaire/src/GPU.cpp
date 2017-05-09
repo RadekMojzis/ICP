@@ -2,6 +2,9 @@
 #include <QDir>
 #include <QApplication>
 #include <iostream>
+#include "action.hpp"
+#include <QMouseEvent>
+
 void GPU::load_images(){
     QString dir = "D:/FIT/ICP/Solitaire/";
 
@@ -31,6 +34,13 @@ void GPU::load_images(){
 
 
 GPU::GPU(){
+    for(int i = 0; i < 4; i++)
+        game_slot_ocupied.push_back(0);
+
+    new_game_btn = new QPushButton("New Game", &window);
+    new_game_btn->resize(200, 50);
+    new_game_btn->move(0, 750);
+    connect(new_game_btn, SIGNAL(clicked()), this, SLOT(new_game_clicked()));
     window.resize(1200, 800);
     window.show();
     window.setWindowTitle("Solitere");
@@ -93,20 +103,36 @@ void GPU::draw_card(Card *card, DeckID deck, int gameid){
 }
 
 void GPU::new_game(){
+    int active = 0;
+    for(int i = 0; i < 4; i++)
+        active += game_slot_ocupied[i];
+
+    if(game.size() > 3){
+        for(int i = 0; i < 4; i++){
+            if(!game_slot_ocupied[i]){
+                active = i;
+                game_slot_ocupied[active] = 1;
+                game[active] = new Game();
+
+                if(active >= 1)
+                    scaling = true;
+                draw_game(active);
+            }
+        }
+        return;
+    }
+    game_slot_ocupied[active] = 1;
     foundations.push_back(vector<vector<gcard*>>());
     piles.push_back(vector<vector<gcard*>>());
-    stock.resize(active+2);
-    flip.resize(active+2);
+    stock.resize(stock.size()+1);
+    flip.resize(flip.size()+1);
 
-    if(game.size() > 3)
-        return;
     game.push_back(new Game());
+    load.push_back(new QPushButton());
 
-    active += 1;
-
-   if(active == 1)
+    if(active == 1)
        rescale(true, 0);
-   if(active >= 1)
+    if(active >= 1)
         scaling = true;
     for(int i = 0; i < 4; i++)
         foundations[active].push_back(vector<gcard*>());
@@ -115,6 +141,12 @@ void GPU::new_game(){
         piles[active].push_back(vector<gcard*>());
 
     draw_game(active);
+}
+
+void GPU::exit_game(int id){
+    clear(id);
+    delete game[id];
+    game_slot_ocupied[id] = 0;
 }
 
 void GPU::rescale(bool scaling, int gameidx){
@@ -133,46 +165,45 @@ void GPU::rescale(bool scaling, int gameidx){
 }
 
 void GPU::execute_action(int src, int dst, int card,int g_id){
-
+    if(src == STOCK)
+        game[g_id]->execute_action(Action(STOCK, FLIP, 666));
+    else{
+        game[g_id]->execute_action(Action(src, dst, card));
+    }
 }
 
-
-void GPU::clear(){
-    for(auto f = foundations[active].begin(); f < foundations[active].end(); f++){
+void GPU::clear(int id){
+    for(auto f = foundations[id].begin(); f < foundations[id].end(); f++){
         for(auto g = (*f).begin(); g < (*f).end(); g++){
             delete *g;
         }
     }
-    for(auto f = piles[active].begin(); f < piles[active].end(); f++){
+    for(auto f = piles[id].begin(); f < piles[id].end(); f++){
         for(auto g = (*f).begin(); g < (*f).end(); g++){
             delete *g;
         }
     }
 
-    delete flip[active];
-    delete stock[active];
-
+    delete flip[id];
+    delete stock[id];
 }
+
 int abs(int a){
     return a > 0 ? a:-a;
 }
+
 int GPU::get_dst_deck(int base_x,int base_y, int g_index){
     for(auto i = foundations[g_index].begin(); i < foundations[g_index].end(); i++){
-        cout << "relative position is: " << abs((*((*i).end()-1))->base_y - base_y) << " deck is: " << (*((*i).end()-1))->src << endl;
-        cout << "relative position is: " << abs((*((*i).end()-1))->base_x - base_x) << " deck is: " << (*((*i).end()-1))->src << endl;
-
-        if(abs((*((*i).end()-1))->base_x - base_x) < scaling ? 25:50
-        && abs((*((*i).end()-1))->base_y - base_y) < scaling ? 45:90       ){
+        if(abs((*((*i).end()-1))->base_x - base_x) < 50
+        && abs((*((*i).end()-1))->base_y - base_y) < 90       ){
             return (*((*i).end()-1))->src;
         }
     }
     for(auto i = piles[g_index].begin(); i < piles[g_index].end(); i++){
-        cout << "relative position is: " << abs((*((*i).end()-1))->base_y - base_y) << " deck is: " <<(*((*i).end()-1))->src << endl;
-        if(abs((*((*i).end()-1))->base_x - base_x) < scaling ? 25:50
-        && abs((*((*i).end()-1))->base_y - base_y) < scaling ? 45:90       ){
+        if(abs((*((*i).end()-1))->base_x - base_x) < 50
+        && abs((*((*i).end()-1))->base_y - base_y) < 90       ){
             return (*((*i).end()-1))->src;
         }
     }
     return -1;
-    //flip and stock make no sence...
 }
